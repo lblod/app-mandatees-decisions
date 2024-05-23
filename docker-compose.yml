@@ -1,8 +1,10 @@
 services:
   consumer-0:
     image: lblod/delta-consumer:0.0.24
+    depends_on:
+      - virtuoso
     volumes:
-      - ./config/custom-dispatching:/config/triples-dispatching/custom-dispatching
+      - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-0'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/'
@@ -20,8 +22,10 @@ services:
       PARALLEL_CALLS: '4'
   consumer-1:
     image: lblod/delta-consumer:0.0.24
+    depends_on:
+      - virtuoso
     volumes:
-      - ./config/custom-dispatching:/config/triples-dispatching/custom-dispatching
+      - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-1'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/'
@@ -39,8 +43,10 @@ services:
       PARALLEL_CALLS: '4'
   consumer-2:
     image: lblod/delta-consumer:0.0.24
+    depends_on:
+      - virtuoso
     volumes:
-      - ./config/custom-dispatching:/config/triples-dispatching/custom-dispatching
+      - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-2'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/'
@@ -58,8 +64,10 @@ services:
       PARALLEL_CALLS: '4'
   consumer-3:
     image: lblod/delta-consumer:0.0.24
+    depends_on:
+      - virtuoso
     volumes:
-      - ./config/custom-dispatching:/config/triples-dispatching/custom-dispatching
+      - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-3'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/'
