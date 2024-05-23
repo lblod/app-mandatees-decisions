@@ -5,7 +5,7 @@ services:
       - ./config/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-0'
-      # DCR_SYNC_BASE_URL: ''
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/'
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_DISABLE_DELTA_INGEST: 'false'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
@@ -24,7 +24,7 @@ services:
       - ./config/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-1'
-      # DCR_SYNC_BASE_URL: ''
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/'
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_DISABLE_DELTA_INGEST: 'false'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
@@ -43,7 +43,7 @@ services:
       - ./config/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-2'
-      # DCR_SYNC_BASE_URL: ''
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/'
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_DISABLE_DELTA_INGEST: 'false'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
@@ -62,7 +62,7 @@ services:
       - ./config/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-3'
-      # DCR_SYNC_BASE_URL: ''
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/'
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_DISABLE_DELTA_INGEST: 'false'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
