@@ -75,3 +75,61 @@ services:
       BATCH_SIZE: '1'
       SLEEP_BETWEEN_BATCHES: '1'
       PARALLEL_CALLS: '4'
+  ##################
+  # Base services ##
+  ##################
+  identifier:
+    image: semtech/mu-identifier:1.10.1
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
+  dispatcher:
+    image: semtech/mu-dispatcher:2.1.0-beta.2
+    volumes:
+      - ./config/dispatcher:/config
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
+  deltanotifier:
+    image: semtech/mu-delta-notifier:0.3.0
+    volumes:
+      - ./config/delta:/config
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
+  database:
+    image: semtech/mu-authorization:0.6.0-beta.8
+    environment:
+      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
+      DATABASE_OVERLOAD_RECOVERY: "true"
+      DATABASE_COMPATIBILITY: "Virtuoso"
+      QUERY_MAX_PROCESSING_TIME: 605000
+      QUERY_MAX_EXECUTION_TIME: 605000
+    volumes:
+      - ./config/authorization:/config
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
+  virtuoso:
+    image: redpencil/virtuoso:1.2.0-rc.1
+    environment:
+      SPARQL_UPDATE: "true"
+      DEFAULT_GRAPH: "http://mu.semte.ch/application"
+    volumes:
+      - ./data/db:/data
+      - ./config/virtuoso/virtuoso.ini:/data/virtuoso.ini # Note: on production override this setting
+      - ./config/virtuoso/:/opt/virtuoso-scripts
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
+  modified:
+    image: lblod/track-modified-service:0.0.0
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
