@@ -3,6 +3,7 @@ services:
     image: lblod/delta-consumer:0.0.24
     depends_on:
       - virtuoso
+    restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
@@ -24,6 +25,7 @@ services:
     image: lblod/delta-consumer:0.0.24
     depends_on:
       - virtuoso
+    restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
@@ -45,6 +47,7 @@ services:
     image: lblod/delta-consumer:0.0.24
     depends_on:
       - virtuoso
+    restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
@@ -66,6 +69,7 @@ services:
     image: lblod/delta-consumer:0.0.24
     depends_on:
       - virtuoso
+    restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
