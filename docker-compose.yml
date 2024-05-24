@@ -21,14 +21,9 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'true'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      INGEST_GRAPH: 'http://mu.semte.ch/graphs/ingest'
-      DELETE_GRAPH: 'http://mu.semte.ch/graphs/delete'
-      TARGET_GRAPH: 'http://mu.semte.ch/graphs/public'
-      TARGET_DATABASE_ENDPOINT: 'http://database:8890/sparql'
       BATCH_SIZE: '1'
       SLEEP_BETWEEN_BATCHES: '1'
       PARALLEL_CALLS: '4'
-      MAX_REASONING_RETRY_ATTEMPTS: '5'
   consumer-1:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -50,14 +45,9 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'true'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      INGEST_GRAPH: 'http://mu.semte.ch/graphs/ingest'
-      DELETE_GRAPH: 'http://mu.semte.ch/graphs/delete'
-      TARGET_GRAPH: 'http://mu.semte.ch/graphs/public'
-      TARGET_DATABASE_ENDPOINT: 'http://database:8890/sparql'
       BATCH_SIZE: '1'
       SLEEP_BETWEEN_BATCHES: '1'
       PARALLEL_CALLS: '4'
-      MAX_REASONING_RETRY_ATTEMPTS: '5'
   consumer-2:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -79,14 +69,9 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'true'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      INGEST_GRAPH: 'http://mu.semte.ch/graphs/ingest'
-      DELETE_GRAPH: 'http://mu.semte.ch/graphs/delete'
-      TARGET_GRAPH: 'http://mu.semte.ch/graphs/public'
-      TARGET_DATABASE_ENDPOINT: 'http://database:8890/sparql'
       BATCH_SIZE: '1'
       SLEEP_BETWEEN_BATCHES: '1'
       PARALLEL_CALLS: '4'
-      MAX_REASONING_RETRY_ATTEMPTS: '5'
   consumer-3:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -108,14 +93,9 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'true'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      INGEST_GRAPH: 'http://mu.semte.ch/graphs/ingest'
-      DELETE_GRAPH: 'http://mu.semte.ch/graphs/delete'
-      TARGET_GRAPH: 'http://mu.semte.ch/graphs/public'
-      TARGET_DATABASE_ENDPOINT: 'http://database:8890/sparql'
       BATCH_SIZE: '1'
       SLEEP_BETWEEN_BATCHES: '1'
       PARALLEL_CALLS: '4'
-      MAX_REASONING_RETRY_ATTEMPTS: '5'
   ##################
   # Base services ##
   ##################
