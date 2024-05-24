@@ -1,5 +1,6 @@
 const PREFIXES = `
-PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>`
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+PREFIX mandaat: <http://data.vlaanderen.be/ns/mandaat#>`
 
 const contextConfig = {
   addTypes: {
@@ -9,24 +10,50 @@ const contextConfig = {
   contextQueries: [
     {
       trigger: {
+        subjectType: 'mandaat:Mandataris',
+      },
+      queryTemplate: (subject) => `
+        ${PREFIXES}
+        CONSTRUCT {
+          ?mandataris ?p ?o .
+        } WHERE {
+          GRAPH <http://mu.semte.ch/graphs/landing-zone> {
+            ?mandataris a mandaat:Mandataris .
+          }
+        }`,
+    },
+    {
+      trigger: {
+        subjectType: 'besluit:Artikel',
+      },
+      queryTemplate: (subject) => `
+        ${PREFIXES}
+        CONSTRUCT {
+          ?artikel ?p ?o .
+        } WHERE {
+          GRAPH <http://mu.semte.ch/graphs/landing-zone> {
+            ?artikel a besluit:Artikel .
+          }
+        }`,
+    },
+    {
+      trigger: {
         subjectType: 'besluit:Besluit',
       },
       queryTemplate: (subject) => `
         ${PREFIXES}
         CONSTRUCT {
-          ?artikel a besluit:Besluit .
-          ?artikel ?p ?o .
+          ?besluit ?p ?o .
         } WHERE {
-          GRAPH <http://mu.semte.ch/graphs/public> {
+          GRAPH <http://mu.semte.ch/graphs/landing-zone> {
             ?besluit a besluit:Besluit .
-            ?besluit ?p ?o .
           }
         }`,
     },
   ],
 }
 
-export default {
+module.exports = {
   contextConfig,
   PREFIXES,
 }
