@@ -1,0 +1,8 @@
+# docker-compose
+docker-compose.override.yml
+
+# data
+/data/db/*
+
+# secrets
+.env

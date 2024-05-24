@@ -1,0 +1,35 @@
+services:
+  consumer-0:
+    restart: 'no'
+    environment:
+      DCR_DISABLE_INITIAL_SYNC: 'false'
+      # DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+  consumer-1:
+    restart: 'no'
+    environment:
+      DCR_DISABLE_INITIAL_SYNC: 'false'
+      # DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+  consumer-2:
+    restart: 'no'
+    environment:
+      DCR_DISABLE_INITIAL_SYNC: 'false'
+      # DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+  consumer-3:
+    restart: 'no'
+    environment:
+      DCR_DISABLE_INITIAL_SYNC: 'false'
+      # DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+  identifier:
+    restart: 'no'
+  dispatcher:
+    restart: 'no'
+  deltanotifier:
+    restart: 'no'
+  database:
+    restart: 'no'
+  virtuoso:
+    restart: 'no'
+    ports:
+      - '8890:8890'
+  modified:
+    restart: 'no'
