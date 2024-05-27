@@ -6,24 +6,22 @@ services:
     restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
-      - ./data/files/consumer-files/besluiten-public:/consumer-files/
     environment:
+      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
       DCR_SERVICE_NAME: 'consumer-0'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/'
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_DISABLE_DELTA_INGEST: 'false'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
       DCR_KEEP_DELTA_FILES: 'false'
-      DCR_DELTA_FILE_FOLDER: '/consumer-files-0'
-      DCR_DISABLE_INITIAL_SYNC: 'true'
+      DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      BATCH_SIZE: '1'
+      DCR_LANDING_ZONE_DATABASE: 'database'
+      BATCH_SIZE: '20'
       SLEEP_BETWEEN_BATCHES: '1'
-      PARALLEL_CALLS: '4'
+      PARALLEL_CALLS: '20'
   consumer-1:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -32,17 +30,16 @@ services:
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
+      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
       DCR_SERVICE_NAME: 'consumer-1'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/'
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_DISABLE_DELTA_INGEST: 'false'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-1'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-1'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-1'
       DCR_KEEP_DELTA_FILES: 'false'
-      DCR_DELTA_FILE_FOLDER: '/consumer-files-1'
-      DCR_DISABLE_INITIAL_SYNC: 'true'
+      DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'virtuoso'
       BATCH_SIZE: '1'
@@ -56,17 +53,16 @@ services:
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
+      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
       DCR_SERVICE_NAME: 'consumer-2'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/'
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_DISABLE_DELTA_INGEST: 'false'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-2'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-2'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-2'
       DCR_KEEP_DELTA_FILES: 'false'
-      DCR_DELTA_FILE_FOLDER: '/consumer-files-2'
-      DCR_DISABLE_INITIAL_SYNC: 'true'
+      DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'virtuoso'
       BATCH_SIZE: '1'
@@ -80,17 +76,16 @@ services:
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
+      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
       DCR_SERVICE_NAME: 'consumer-3'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/'
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_DISABLE_DELTA_INGEST: 'false'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-3'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-3'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-3'
       DCR_KEEP_DELTA_FILES: 'false'
-      DCR_DELTA_FILE_FOLDER: '/consumer-files-3'
-      DCR_DISABLE_INITIAL_SYNC: 'true'
+      DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'virtuoso'
       BATCH_SIZE: '1'
