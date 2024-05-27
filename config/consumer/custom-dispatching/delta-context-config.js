@@ -1,6 +1,9 @@
+const { STAGING_GRAPH } = require('./config')
+
 const PREFIXES = `
 PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
-PREFIX mandaat: <http://data.vlaanderen.be/ns/mandaat#>`
+PREFIX mandaat: <http://data.vlaanderen.be/ns/mandaat#>
+PREFIX person: <http://www.w3.org/ns/person#>`
 
 const contextConfig = {
   addTypes: {
@@ -17,22 +20,22 @@ const contextConfig = {
         CONSTRUCT {
           ?mandataris ?p ?o .
         } WHERE {
-          GRAPH <http://mu.semte.ch/graphs/landing-zone> {
+          GRAPH <${STAGING_GRAPH}> {
             ?mandataris a mandaat:Mandataris .
           }
         }`,
     },
     {
       trigger: {
-        subjectType: 'besluit:Artikel',
+        subjectType: 'person:Person',
       },
       queryTemplate: (subject) => `
         ${PREFIXES}
         CONSTRUCT {
-          ?artikel ?p ?o .
+          ?person ?p ?o .
         } WHERE {
-          GRAPH <http://mu.semte.ch/graphs/landing-zone> {
-            ?artikel a besluit:Artikel .
+          GRAPH <${STAGING_GRAPH}> {
+            ?person a person:Person .
           }
         }`,
     },
@@ -45,7 +48,7 @@ const contextConfig = {
         CONSTRUCT {
           ?besluit ?p ?o .
         } WHERE {
-          GRAPH <http://mu.semte.ch/graphs/landing-zone> {
+          GRAPH <${STAGING_GRAPH}> {
             ?besluit a besluit:Besluit .
           }
         }`,
