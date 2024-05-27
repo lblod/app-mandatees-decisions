@@ -16,7 +16,9 @@ defmodule Acl.UserGroups.Config do
             graph: "http://mu.semte.ch/graphs/public",
             constraint: %ResourceConstraint{
               resource_types: [
-                "http://data.vlaanderen.be/ns/besluit#Besluit"
+                "http://data.vlaanderen.be/ns/besluit#Besluit",
+                "http://data.vlaanderen.be/ns/mandaat#Mandataris",
+                "http://www.w3.org/ns/person#Person",
               ]
             }
           }
