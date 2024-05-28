@@ -2,6 +2,7 @@ services:
   consumer-0:
     image: lblod/delta-consumer:0.0.24
     depends_on:
+      - database
       - virtuoso
     restart: always
     volumes:
@@ -19,12 +20,13 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'database'
-      BATCH_SIZE: '20'
+      BATCH_SIZE: '100'
       SLEEP_BETWEEN_BATCHES: '1'
       PARALLEL_CALLS: '20'
   consumer-1:
     image: lblod/delta-consumer:0.0.24
     depends_on:
+      - database
       - virtuoso
     restart: always
     volumes:
@@ -41,13 +43,14 @@ services:
       DCR_KEEP_DELTA_FILES: 'false'
       DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      BATCH_SIZE: '1'
+      DCR_LANDING_ZONE_DATABASE: 'database'
+      BATCH_SIZE: '100'
       SLEEP_BETWEEN_BATCHES: '1'
-      PARALLEL_CALLS: '4'
+      PARALLEL_CALLS: '20'
   consumer-2:
     image: lblod/delta-consumer:0.0.24
     depends_on:
+      - database
       - virtuoso
     restart: always
     volumes:
@@ -64,13 +67,14 @@ services:
       DCR_KEEP_DELTA_FILES: 'false'
       DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      BATCH_SIZE: '1'
+      DCR_LANDING_ZONE_DATABASE: 'database'
+      BATCH_SIZE: '100'
       SLEEP_BETWEEN_BATCHES: '1'
-      PARALLEL_CALLS: '4'
+      PARALLEL_CALLS: '20'
   consumer-3:
     image: lblod/delta-consumer:0.0.24
     depends_on:
+      - database
       - virtuoso
     restart: always
     volumes:
@@ -87,10 +91,10 @@ services:
       DCR_KEEP_DELTA_FILES: 'false'
       DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      BATCH_SIZE: '1'
+      DCR_LANDING_ZONE_DATABASE: 'database'
+      BATCH_SIZE: '100'
       SLEEP_BETWEEN_BATCHES: '1'
-      PARALLEL_CALLS: '4'
+      PARALLEL_CALLS: '20'
   ##################
   # Base services ##
   ##################
