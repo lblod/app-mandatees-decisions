@@ -28,7 +28,7 @@ const {
 async function dispatch(lib, data) {
   const { mu, muAuthSudo } = lib
   const triples = data.termObjects
-  const triplesAsString = data.termObjects.map((triple) =>
+  const triplesAsString = triples.map((triple) =>
     statementToStringTriple(triple)
   )
 
