@@ -36,6 +36,7 @@ async function dispatch(lib, data) {
   await addModifiedToSubjects(
     muAuthSudo.updateSudo,
     DATABASE_ENDPOINT,
+    BATCH_SIZE,
     triples.map((triple) => triple.subject),
     STAGING_GRAPH
   )

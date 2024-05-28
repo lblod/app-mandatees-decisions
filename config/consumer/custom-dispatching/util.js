@@ -26,23 +26,39 @@ async function triplesToGraph(
   }
 }
 
-async function addModifiedToSubjects(muUpdate, endpoint, subjects, graph) {
-  for (const subject of subjects) {
-    const query = `
+async function addModifiedToSubjects(
+  muUpdate,
+  endpoint,
+  batchSize,
+  subjects,
+  graph
+) {
+  const query = (batchUris) => `
       DELETE {
-        ${subject} <http://mu.semte.ch/vocabularies/ext/modifiedReference> ?o .
-      }
-      INSERT DATE {
         GRAPH <${graph}> {
-        ${subject} <http://mu.semte.ch/vocabularies/ext/modifiedReference> "${new Date().toISOString()}"^^<http://www.w3.org/2001/XMLSchema#dateTime>
+            ?s <http://mu.semte.ch/vocabularies/ext/modifiedReference> ?o .
+        }
+      }
+      INSERT {
+        GRAPH <${graph}> {
+          ?s <http://mu.semte.ch/vocabularies/ext/modifiedReference> "${new Date().toISOString()}"^^<http://www.w3.org/2001/XMLSchema#dateTime>
         }
       }
       WHERE {
-        ${subject} <http://mu.semte.ch/vocabularies/ext/modifiedReference> ?o .
+        VALUES ?s { ${batchUris} }
+        GRAPH <${graph}> {
+          ?s a ?type .
+
+          OPTIONAL {
+            ?s <http://mu.semte.ch/vocabularies/ext/modifiedReference> ?o .
+          }
+        }
       }
     `
 
-    await muUpdate(query, {}, endpoint)
+  for (let index = 0; index < subjects.length; index += batchSize) {
+    const batchUris = subjects.slice(index, index + batchSize).join(' ')
+    await muUpdate(query(batchUris), {}, endpoint)
   }
 }
 
