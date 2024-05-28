@@ -70,6 +70,9 @@ async function insertTriplesOfTypesInGraph(
   fromGraph,
   toGraph
 ) {
+  // When a delta-syn-dispatch comes in all data is update in the staging graph
+  // If we delete the triples of the subjects that where in the target graph and than
+  // insert all the updated triples from the staging graph we have an updated target
   const query = `
     DELETE {
       GRAPH ${mu.sparqlEscapeUri(toGraph)} {
@@ -91,7 +94,8 @@ async function insertTriplesOfTypesInGraph(
   `
   await muUpdate(query, {}, endpoint)
 }
-
+// These statements come as string value with the brackets
+// E.g. { subject: '<subject>', predicate: '<predicate>', object: '<object>'
 function statementToStringTriple(statement) {
   try {
     return `${statement.subject} ${statement.predicate} ${statement.object}.`

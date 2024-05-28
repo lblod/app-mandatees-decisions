@@ -32,6 +32,7 @@ async function dispatch(lib, data) {
     statementToStringTriple(triple)
   )
 
+  // Inserting all the triples into our staging graph
   await triplesToGraph(
     muAuthSudo.updateSudo,
     DATABASE_ENDPOINT,
@@ -40,6 +41,7 @@ async function dispatch(lib, data) {
     triplesAsString
   )
 
+  // For cleanup purposes we add a modified predicate to each subject
   await addModifiedToSubjects(
     muAuthSudo.updateSudo,
     DATABASE_ENDPOINT,
@@ -48,6 +50,7 @@ async function dispatch(lib, data) {
     STAGING_GRAPH
   )
 
+  // Inserting all the triples of subjects that are of an interesting type
   await insertTriplesOfTypesInGraph(
     mu,
     muAuthSudo.updateSudo,

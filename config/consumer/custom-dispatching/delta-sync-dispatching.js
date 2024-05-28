@@ -30,13 +30,14 @@ async function dispatch(lib, data) {
   const { termObjectChangeSets } = data
 
   for (let { deletes, inserts } of termObjectChangeSets) {
+    // NOTE: this code is not yet tested as we cannot trigger a delta sync dispatch
     await triplesToGraph(
       muAuthSudo.updateSudo,
       DATABASE_ENDPOINT,
       BATCH_SIZE,
       STAGING_GRAPH,
       deletes.map((triple) => statementToStringTriple(triple)),
-      false
+      false // This means it is deleting the triples
     )
     await triplesToGraph(
       muAuthSudo.updateSudo,
