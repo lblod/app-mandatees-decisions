@@ -1,8 +1,15 @@
-const { DATABASE_ENDPOINT, STAGING_GRAPH, BATCH_SIZE } = require('./config')
+const {
+  DATABASE_ENDPOINT,
+  STAGING_GRAPH,
+  BATCH_SIZE,
+  INTERESTING_TYPES,
+  TARGET_GRAPH,
+} = require('./config')
 const {
   triplesToGraph,
   addModifiedToSubjects,
   statementToStringTriple,
+  insertTriplesOfTypesInGraph,
 } = require('./util')
 
 /**
@@ -19,7 +26,7 @@ const {
  * @return {void} Nothing
  */
 async function dispatch(lib, data) {
-  const { muAuthSudo } = lib
+  const { mu, muAuthSudo } = lib
   const triples = data.termObjects
   const triplesAsString = data.termObjects.map((triple) =>
     statementToStringTriple(triple)
@@ -39,6 +46,15 @@ async function dispatch(lib, data) {
     BATCH_SIZE,
     triples.map((triple) => triple.subject),
     STAGING_GRAPH
+  )
+
+  await insertTriplesOfTypesInGraph(
+    mu,
+    muAuthSudo.updateSudo,
+    DATABASE_ENDPOINT,
+    INTERESTING_TYPES,
+    STAGING_GRAPH,
+    TARGET_GRAPH
   )
 }
 

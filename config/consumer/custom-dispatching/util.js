@@ -62,6 +62,32 @@ async function addModifiedToSubjects(
   }
 }
 
+async function insertTriplesOfTypesInGraph(
+  mu,
+  muUpdate,
+  endpoint,
+  types,
+  fromGraph,
+  toGraph
+) {
+  const query = `
+    INSERT {
+      GRAPH ${mu.sparqlEscapeUri(toGraph)} {
+        ?s ?p ?o .
+      }
+    } WHERE {
+      VALUES ?type { ${types
+        .map((type) => mu.sparqlEscapeUri(type))
+        .join(' ')} }
+      GRAPH ${mu.sparqlEscapeUri(fromGraph)} {
+        ?s a ?type .
+        ?s ?p ?o .
+      }
+    }
+  `
+  await muUpdate(query, {}, endpoint)
+}
+
 function statementToStringTriple(statement) {
   try {
     return `${statement.subject} ${statement.predicate} ${statement.object}.`
@@ -74,4 +100,5 @@ module.exports = {
   triplesToGraph,
   addModifiedToSubjects,
   statementToStringTriple,
+  insertTriplesOfTypesInGraph,
 }
