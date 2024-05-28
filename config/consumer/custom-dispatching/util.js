@@ -71,7 +71,11 @@ async function insertTriplesOfTypesInGraph(
   toGraph
 ) {
   const query = `
-    INSERT {
+    DELETE {
+      GRAPH ${mu.sparqlEscapeUri(toGraph)} {
+        ?s ?p ?o .
+      }
+    } INSERT {
       GRAPH ${mu.sparqlEscapeUri(toGraph)} {
         ?s ?p ?o .
       }
