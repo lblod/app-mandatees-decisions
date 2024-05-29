@@ -2,7 +2,7 @@
 
 ## Application
 
-Monitoring the endpoints where the "besluiten" are harvested. When running this app it will do an inital sync of all the harvested data from the endpoints. The data that is added to the virtuoso can be filtered out by defining interesting types in the configuration.
+Monitoring the endpoints where the "besluiten" are harvested. This is done by using the [delta-consumer-services](https://github.com/lblod/delta-consumer/blob/master/README.md). When running this app it will do an inital sync of all the harvested data from the endpoints. The data that is added to the virtuoso can be filtered out by defining interesting types in the configuration.
 
 ## Flow
 
