@@ -9,7 +9,7 @@ services:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/' # QA endpoint
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
@@ -29,7 +29,7 @@ services:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/' # QA endpoint
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-1'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-1'
@@ -49,7 +49,7 @@ services:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/' # QA endpoint
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-2'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-2'
@@ -69,7 +69,7 @@ services:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/' # QA endpoint
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-3'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-3'
