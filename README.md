@@ -23,3 +23,14 @@ To get all the inserted data you can query accordingly on the endpoint set by **
 - **INTERESTING_TYPES**: All uri's that we want to insert into the _target graph_
 - **TARGET_GRAPH**: The final graph where all the _interesting types_ will be added to
 - **TARGET_DATABASE_ENDPOINT**: The database connection that can be called for adding the triples
+
+## Endpoints
+
+These values can be added as the **DCR_SYNC_BASE_URL**.
+
+### QA
+
+- https://lokaalbeslist-harvester-0.s.redhost.be/
+- https://lokaalbeslist-harvester-1.s.redhost.be/
+- https://lokaalbeslist-harvester-2.s.redhost.be/
+- https://lokaalbeslist-harvester-3.s.redhost.be/
