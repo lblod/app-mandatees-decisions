@@ -2,120 +2,83 @@ services:
   consumer-0:
     image: lblod/delta-consumer:0.0.24
     depends_on:
+      - database
       - virtuoso
     restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
-      - ./data/files/consumer-files/besluiten-public:/consumer-files/
     environment:
-      DCR_SERVICE_NAME: 'consumer-0'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/'
-      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_DISABLE_DELTA_INGEST: 'false'
+      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/' # QA endpoint
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
-      DCR_KEEP_DELTA_FILES: 'false'
-      DCR_DELTA_FILE_FOLDER: '/consumer-files-0'
-      DCR_DISABLE_INITIAL_SYNC: 'true'
+      DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      INGEST_GRAPH: 'http://mu.semte.ch/graphs/ingest'
-      DELETE_GRAPH: 'http://mu.semte.ch/graphs/delete'
-      TARGET_GRAPH: 'http://mu.semte.ch/graphs/public'
-      TARGET_DATABASE_ENDPOINT: 'http://database:8890/sparql'
-      BATCH_SIZE: '1'
-      SLEEP_BETWEEN_BATCHES: '1'
-      PARALLEL_CALLS: '4'
-      MAX_REASONING_RETRY_ATTEMPTS: '5'
+      DCR_LANDING_ZONE_DATABASE: 'database'
+      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
+      PARALLEL_CALLS: '20'
   consumer-1:
     image: lblod/delta-consumer:0.0.24
     depends_on:
+      - database
       - virtuoso
     restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
-      DCR_SERVICE_NAME: 'consumer-1'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/'
-      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_DISABLE_DELTA_INGEST: 'false'
+      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/' # QA endpoint
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-1'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-1'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-1'
-      DCR_KEEP_DELTA_FILES: 'false'
-      DCR_DELTA_FILE_FOLDER: '/consumer-files-1'
-      DCR_DISABLE_INITIAL_SYNC: 'true'
+      DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      INGEST_GRAPH: 'http://mu.semte.ch/graphs/ingest'
-      DELETE_GRAPH: 'http://mu.semte.ch/graphs/delete'
-      TARGET_GRAPH: 'http://mu.semte.ch/graphs/public'
-      TARGET_DATABASE_ENDPOINT: 'http://database:8890/sparql'
-      BATCH_SIZE: '1'
-      SLEEP_BETWEEN_BATCHES: '1'
-      PARALLEL_CALLS: '4'
-      MAX_REASONING_RETRY_ATTEMPTS: '5'
+      DCR_LANDING_ZONE_DATABASE: 'database'
+      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
+      PARALLEL_CALLS: '20'
   consumer-2:
     image: lblod/delta-consumer:0.0.24
     depends_on:
+      - database
       - virtuoso
     restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
-      DCR_SERVICE_NAME: 'consumer-2'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/'
-      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_DISABLE_DELTA_INGEST: 'false'
+      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/' # QA endpoint
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-2'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-2'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-2'
-      DCR_KEEP_DELTA_FILES: 'false'
-      DCR_DELTA_FILE_FOLDER: '/consumer-files-2'
-      DCR_DISABLE_INITIAL_SYNC: 'true'
+      DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      INGEST_GRAPH: 'http://mu.semte.ch/graphs/ingest'
-      DELETE_GRAPH: 'http://mu.semte.ch/graphs/delete'
-      TARGET_GRAPH: 'http://mu.semte.ch/graphs/public'
-      TARGET_DATABASE_ENDPOINT: 'http://database:8890/sparql'
-      BATCH_SIZE: '1'
-      SLEEP_BETWEEN_BATCHES: '1'
-      PARALLEL_CALLS: '4'
-      MAX_REASONING_RETRY_ATTEMPTS: '5'
+      DCR_LANDING_ZONE_DATABASE: 'database'
+      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
+      PARALLEL_CALLS: '20'
   consumer-3:
     image: lblod/delta-consumer:0.0.24
     depends_on:
+      - database
       - virtuoso
     restart: always
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
-      DCR_SERVICE_NAME: 'consumer-3'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/'
-      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_DISABLE_DELTA_INGEST: 'false'
+      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/' # QA endpoint
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-3'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-3'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-3'
-      DCR_KEEP_DELTA_FILES: 'false'
-      DCR_DELTA_FILE_FOLDER: '/consumer-files-3'
-      DCR_DISABLE_INITIAL_SYNC: 'true'
+      DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'virtuoso'
-      INGEST_GRAPH: 'http://mu.semte.ch/graphs/ingest'
-      DELETE_GRAPH: 'http://mu.semte.ch/graphs/delete'
-      TARGET_GRAPH: 'http://mu.semte.ch/graphs/public'
-      TARGET_DATABASE_ENDPOINT: 'http://database:8890/sparql'
-      BATCH_SIZE: '1'
-      SLEEP_BETWEEN_BATCHES: '1'
-      PARALLEL_CALLS: '4'
-      MAX_REASONING_RETRY_ATTEMPTS: '5'
+      DCR_LANDING_ZONE_DATABASE: 'database'
+      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
+      PARALLEL_CALLS: '20'
   ##################
   # Base services ##
   ##################
