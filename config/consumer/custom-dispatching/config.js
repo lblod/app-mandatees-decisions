@@ -1,54 +1,30 @@
-const DEFAULT_STAGING_GRAPH = 'http://mu.semte.ch/graphs/staging'
-const DEFAULT_TARGET_GRAPH = 'http://mu.semte.ch/graphs/public'
-const DEFAULT_DATABASE_ENDPOINT = 'http://database:8890/sparql'
-const DEFAULT_INTERESTING_TYPES = 'http://data.vlaanderen.be/ns/besluit#Besluit'
-
-if (!process.env.DCR_LANDING_ZONE_GRAPH)
-  console.log(
-    '\t Using the the default STAGING_GRAPH => ',
-    DEFAULT_STAGING_GRAPH
-  )
-if (!process.env.TARGET_GRAPH)
-  console.log('\t Using the the default TARGET_GRAPH => ', DEFAULT_TARGET_GRAPH)
-if (!process.env.DATABASE_ENDPOINT)
-  console.log(
-    '\t Using the the default TARGET_DATABASE_ENDPOINT => ',
-    DEFAULT_DATABASE_ENDPOINT
-  )
-
-if (!process.env.INTERESTING_TYPES)
-  console.log(
-    '\t Using the the default INTERESTING_TYPES => ',
-    DEFAULT_INTERESTING_TYPES
-  )
-
-const STAGING_GRAPH =
-  process.env.DCR_LANDING_ZONE_GRAPH || DEFAULT_STAGING_GRAPH
-const TARGET_GRAPH = process.env.TARGET_GRAPH || DEFAULT_TARGET_GRAPH
-
-const DATABASE_ENDPOINT =
-  process.env.TARGET_DATABASE_ENDPOINT || DEFAULT_DATABASE_ENDPOINT
-
-const BATCH_SIZE = parseInt(process.env.BATCH_SIZE) || 100
-const INTERESTING_TYPES =
-  commaSeparatedStringToArray(process.env.INTERESTING_TYPES) ||
-  commaSeparatedStringToArray(DEFAULT_INTERESTING_TYPES)
-
-function commaSeparatedStringToArray(string) {
-  if (!string) {
-    return null
-  }
-
-  return string
-    .split(',')
-    .map((type) => type.trim())
-    .filter((type) => type)
-}
+const BATCH_SIZE = parseInt(process.env.BATCH_SIZE || 1);
+const PARALLEL_CALLS = parseInt(process.env.PARALLEL_CALLS || 1);
+const MU_CALL_SCOPE_ID_INITIAL_SYNC =
+  process.env.MU_CALL_SCOPE_ID_INITIAL_SYNC ||
+  "http://redpencil.data.gift/id/concept/muScope/deltas/consumer/initialSync";
+const BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES =
+  process.env.BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES == "true" ? true : false;
+const DIRECT_DATABASE_ENDPOINT =
+  process.env.DIRECT_DATABASE_ENDPOINT || "http://virtuoso:8890/sparql";
+const MAX_DB_RETRY_ATTEMPTS = parseInt(process.env.MAX_DB_RETRY_ATTEMPTS || 5);
+const SLEEP_BETWEEN_BATCHES = parseInt(
+  process.env.SLEEP_BETWEEN_BATCHES || 1000,
+);
+const SLEEP_TIME_AFTER_FAILED_DB_OPERATION = parseInt(
+  process.env.SLEEP_TIME_AFTER_FAILED_DB_OPERATION || 60000,
+);
+const INGEST_GRAPH =
+  process.env.INGEST_GRAPH || `http://mu.semte.ch/graphs/public`;
 
 module.exports = {
-  STAGING_GRAPH,
-  TARGET_GRAPH,
-  DATABASE_ENDPOINT,
   BATCH_SIZE,
-  INTERESTING_TYPES,
-}
+  PARALLEL_CALLS,
+  MU_CALL_SCOPE_ID_INITIAL_SYNC,
+  BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES,
+  DIRECT_DATABASE_ENDPOINT,
+  MAX_DB_RETRY_ATTEMPTS,
+  SLEEP_BETWEEN_BATCHES,
+  SLEEP_TIME_AFTER_FAILED_DB_OPERATION,
+  INGEST_GRAPH,
+};

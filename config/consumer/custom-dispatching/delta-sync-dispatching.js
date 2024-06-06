@@ -1,16 +1,13 @@
-const {
-  DATABASE_ENDPOINT,
-  STAGING_GRAPH,
+const { BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES,
+  DIRECT_DATABASE_ENDPOINT,
   BATCH_SIZE,
-  INTERESTING_TYPES,
-  TARGET_GRAPH,
-} = require('./config')
-const {
-  triplesToGraph,
-  addModifiedToSubjects,
-  statementToStringTriple,
-  insertTriplesOfTypesInGraph,
-} = require('./util')
+  SLEEP_BETWEEN_BATCHES,
+  INGEST_GRAPH,
+  PARALLEL_CALLS
+} = require('./config');
+const { parallelisedBatchedUpdate } = require('./utils');
+const endpoint = BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES ? DIRECT_DATABASE_ENDPOINT : process.env.MU_SPARQL_ENDPOINT; //Defaults to mu-auth
+
 
 /**
  * Dispatch the fetched information to a target graph.
@@ -26,46 +23,51 @@ const {
  * @return {void} Nothing
  */
 async function dispatch(lib, data) {
-  const { mu, muAuthSudo } = lib
-  const { termObjectChangeSets } = data
+  const { mu, } = lib;
+  const { termObjectChangeSets } = data;
 
   for (let { deletes, inserts } of termObjectChangeSets) {
-    // NOTE: this code is not yet tested as we cannot trigger a delta sync dispatch
-    await triplesToGraph(
-      muAuthSudo.updateSudo,
-      DATABASE_ENDPOINT,
-      BATCH_SIZE,
-      STAGING_GRAPH,
-      deletes.map((triple) => statementToStringTriple(triple)),
-      false // This means it is deleting the triples
-    )
-    await triplesToGraph(
-      muAuthSudo.updateSudo,
-      DATABASE_ENDPOINT,
-      BATCH_SIZE,
-      STAGING_GRAPH,
-      inserts.map((triple) => statementToStringTriple(triple))
-    )
 
-    await addModifiedToSubjects(
-      muAuthSudo.updateSudo,
-      DATABASE_ENDPOINT,
-      BATCH_SIZE,
-      inserts.map((triple) => triple.subject),
-      STAGING_GRAPH
-    )
+    if (BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES) {
+      console.warn(`Service configured to skip MU_AUTH!`);
+    }
+    console.log(`Using ${endpoint} to insert triples`);
 
-    await insertTriplesOfTypesInGraph(
-      mu,
-      muAuthSudo.updateSudo,
-      DATABASE_ENDPOINT,
-      INTERESTING_TYPES,
-      STAGING_GRAPH,
-      TARGET_GRAPH
-    )
+    const deleteStatements = deletes.map(o => `${o.subject} ${o.predicate} ${o.object}.`);
+    await parallelisedBatchedUpdate(
+      lib,
+      deleteStatements,
+      INGEST_GRAPH,
+      SLEEP_BETWEEN_BATCHES,
+      BATCH_SIZE,
+      {},
+      endpoint,
+      "DELETE",
+      //If we don't bypass mu-auth already from the start, we provide a direct database endpoint
+      // as fallback
+      !BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES ? DIRECT_DATABASE_ENDPOINT : '',
+      PARALLEL_CALLS
+    );
+
+    const insertStatements = inserts.map(o => `${o.subject} ${o.predicate} ${o.object}.`);
+    await parallelisedBatchedUpdate(
+      lib,
+      insertStatements,
+      INGEST_GRAPH,
+      SLEEP_BETWEEN_BATCHES,
+      BATCH_SIZE,
+      {},
+      endpoint,
+      "INSERT",
+      //If we don't bypass mu-auth already from the start, we provide a direct database endpoint
+      // as fallback
+      !BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES ? DIRECT_DATABASE_ENDPOINT : '',
+      PARALLEL_CALLS
+    );
+
   }
 }
 
 module.exports = {
-  dispatch,
-}
+  dispatch
+};
