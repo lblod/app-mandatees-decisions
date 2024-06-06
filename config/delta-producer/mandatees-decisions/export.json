@@ -1,0 +1,76 @@
+{
+  "export": [
+    {
+      "type": "http://data.vlaanderen.be/ns/besluit#Artikel",
+      "graphsFilter": [
+        "http://mu.semte.ch/graphs/public"
+      ],
+      "properties": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://mu.semte.ch/vocabularies/core/uuid",
+        "http://data.europa.eu/eli/ontology#number",
+        "http://data.europa.eu/eli/ontology#realizes",
+        "http://data.europa.eu/eli/ontology#cites",
+        "http://data.europa.eu/eli/ontology#corrects",
+        "http://data.europa.eu/eli/ontology#corrected_by",
+        "http://data.europa.eu/eli/ontology#language",
+        "http://data.europa.eu/eli/ontology#title",
+        "http://data.europa.eu/eli/ontology#changed_by",
+        "http://data.europa.eu/eli/ontology#changes",
+        "http://www.w3.org/2002/07/owl#sameAs",
+        "http://www.w3.org/ns/prov#wasDerivedFrom",
+        "http://www.w3.org/ns/prov#value"
+      ],
+      "healingOptions": {
+        "http://data.europa.eu/eli/ontology#title": {
+          "queryChunkSize": 100000
+        }
+      }
+    },
+    {
+      "type": "http://data.vlaanderen.be/ns/besluit#Besluit",
+      "graphsFilter": [
+        "http://mu.semte.ch/graphs/public"
+      ],
+      "properties": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://mu.semte.ch/vocabularies/core/uuid",
+        "http://data.europa.eu/eli/ontology#description",
+        "http://data.europa.eu/eli/ontology#title_short",
+        "http://data.vlaanderen.be/ns/besluit#motivering",
+        "http://data.europa.eu/eli/ontology#date_publication",
+        "http://data.europa.eu/eli/ontology#realizes",
+        "http://www.w3.org/ns/prov#wasGeneratedBy",
+        "http://data.europa.eu/eli/ontology#cites",
+        "http://data.europa.eu/eli/ontology#corrects",
+        "http://data.europa.eu/eli/ontology#corrected_by",
+        "http://data.europa.eu/eli/ontology#language",
+        "http://data.europa.eu/eli/ontology#title",
+        "http://data.europa.eu/eli/ontology#changed_by",
+        "http://data.europa.eu/eli/ontology#changes",
+        "http://www.w3.org/2002/07/owl#sameAs",
+        "http://data.europa.eu/eli/ontology#passed_by",
+        "http://data.europa.eu/eli/ontology#has_part",
+        "http://data.europa.eu/eli/ontology#date_no_longer_in_force",
+        "http://data.europa.eu/eli/ontology#first_date_entry_in_force",
+        "http://data.europa.eu/eli/ontology#type_document",
+        "http://www.w3.org/ns/prov#wasDerivedFrom",
+        "http://www.w3.org/ns/prov#value"
+      ],
+      "healingOptions": {
+        "http://data.europa.eu/eli/ontology#description": {
+          "queryChunkSize": 100000
+        },
+        "http://data.vlaanderen.be/ns/besluit#motivering": {
+          "queryChunkSize": 50000
+        },
+        "http://data.europa.eu/eli/ontology#title": {
+          "queryChunkSize": 100000
+        },
+        "http://www.w3.org/ns/prov#value": {
+          "queryChunkSize": 50000
+        }
+      }
+    }
+  ]
+}
