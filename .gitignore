@@ -2,7 +2,7 @@
 docker-compose.override.yml
 
 # data
-/data/db/*
+/data/*
 
 # secrets
 .env
