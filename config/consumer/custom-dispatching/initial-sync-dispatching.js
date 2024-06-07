@@ -1,20 +1,21 @@
+const { parallelisedBatchedUpdate } = require("./utils");
 const {
-  DATABASE_ENDPOINT,
-  STAGING_GRAPH,
+  BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES,
+  DIRECT_DATABASE_ENDPOINT,
+  MU_CALL_SCOPE_ID_INITIAL_SYNC,
   BATCH_SIZE,
-  INTERESTING_TYPES,
-  TARGET_GRAPH,
-} = require('./config')
-const {
-  triplesToGraph,
-  addModifiedToSubjects,
-  statementToStringTriple,
-  insertTriplesOfTypesInGraph,
-} = require('./util')
+  SLEEP_BETWEEN_BATCHES,
+  INGEST_GRAPH,
+  PARALLEL_CALLS,
+} = require("./config");
+
+const endpoint = BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES
+  ? DIRECT_DATABASE_ENDPOINT
+  : process.env.MU_SPARQL_ENDPOINT;
 
 /**
  * Dispatch the fetched information to a target graph.
- * @param { mu, muAuthSudo, fetch } lib - The provided libraries from the host service.
+ * @param { mu, muAuthSudo, fech } lib - The provided libraries from the host service.
  * @param { termObjects } data - The fetched quad information, which objects of serialized Terms
  *          [ {
  *              graph: "<http://foo>",
@@ -26,39 +27,31 @@ const {
  * @return {void} Nothing
  */
 async function dispatch(lib, data) {
-  const { mu, muAuthSudo } = lib
-  const triples = data.termObjects
-  const triplesAsString = triples.map((triple) =>
-    statementToStringTriple(triple)
-  )
+  const { mu } = lib;
 
-  // Inserting all the triples into our staging graph
-  await triplesToGraph(
-    muAuthSudo.updateSudo,
-    DATABASE_ENDPOINT,
+  const triples = data.termObjects.map(
+    (o) => `${o.subject} ${o.predicate} ${o.object}.`,
+  );
+
+  if (BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES) {
+    console.warn(`Service configured to skip MU_AUTH!`);
+  }
+  console.log(`Using ${endpoint} to insert triples`);
+
+  await parallelisedBatchedUpdate (
+    lib,
+    triples,
+    INGEST_GRAPH,
+    SLEEP_BETWEEN_BATCHES,
     BATCH_SIZE,
-    STAGING_GRAPH,
-    triplesAsString
-  )
-
-  // For cleanup purposes we add a modified predicate to each subject
-  await addModifiedToSubjects(
-    muAuthSudo.updateSudo,
-    DATABASE_ENDPOINT,
-    BATCH_SIZE,
-    triples.map((triple) => triple.subject),
-    STAGING_GRAPH
-  )
-
-  // Inserting all the triples of subjects that are of an interesting type
-  await insertTriplesOfTypesInGraph(
-    mu,
-    muAuthSudo.updateSudo,
-    DATABASE_ENDPOINT,
-    INTERESTING_TYPES,
-    STAGING_GRAPH,
-    TARGET_GRAPH
-  )
+    { "mu-call-scope-id": MU_CALL_SCOPE_ID_INITIAL_SYNC },
+    endpoint,
+    "INSERT",
+    //If we don't bypass mu-auth already from the start, we provide a direct database endpoint
+    // as fallback
+    !BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES ? DIRECT_DATABASE_ENDPOINT : '',
+    PARALLEL_CALLS
+  );
 }
 
 /**
@@ -67,13 +60,15 @@ async function dispatch(lib, data) {
  * @param { mu, muAuthSudo, fech } lib - The provided libraries from the host service.
  * @return {void} Nothing
  */
-async function onFinishInitialIngest(lib) {
+async function onFinishInitialIngest(_lib) {
   console.log(`
-    Current implementation does nothing.
-  `)
+    onFinishInitialIngest was called!
+    Current implementation does nothing, no worries.
+    You can overrule it for extra manipulations after initial ingest.
+  `);
 }
 
 module.exports = {
   dispatch,
   onFinishInitialIngest,
-}
+};
