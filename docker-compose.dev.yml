@@ -19,6 +19,20 @@ services:
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
       DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+  jobs-dashboard:
+    restart: 'no'
+  publication-triplestore:
+    ports:
+      - '8891:8890'
+    restart: 'no'
+  jobs-controller:
+    restart: 'no'
+  delta-producer-background-jobs-initiator:
+    restart: 'no'
+  delta-producer-publication-graph-maintainer:
+    restart: 'no'
+  delta-producer-dump-file-publisher:
+    restart: 'no'
   identifier:
     restart: 'no'
   dispatcher:
