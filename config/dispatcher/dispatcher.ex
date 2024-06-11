@@ -85,7 +85,7 @@ defmodule Dispatcher do
   # Deltas: mandatees-decisions
   #################################################################
 
-  get "/sync/submissions/files/*path", %{ layer: :api_services } do
+  get "/sync/mandatees-decisions/files/*path", %{ layer: :api_services } do
     forward conn, path, "http://delta-producer-publication-graph-maintainer/mandatees-decisions/files/"
   end
 
