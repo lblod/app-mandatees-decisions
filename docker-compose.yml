@@ -29,7 +29,6 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'database'
-      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
       PARALLEL_CALLS: '20'
   consumer-1:
     image: lblod/delta-consumer:0.0.24
@@ -51,7 +50,6 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'database'
-      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
       PARALLEL_CALLS: '20'
   consumer-2:
     image: lblod/delta-consumer:0.0.24
@@ -73,7 +71,6 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'database'
-      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
       PARALLEL_CALLS: '20'
   consumer-3:
     image: lblod/delta-consumer:0.0.24
@@ -95,7 +92,6 @@ services:
       DCR_DISABLE_INITIAL_SYNC: 'false'
       DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
       DCR_LANDING_ZONE_DATABASE: 'database'
-      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
       PARALLEL_CALLS: '20'
   ######################
   # Producer services ##
