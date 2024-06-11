@@ -23,7 +23,7 @@ services:
     restart: 'no'
   publication-triplestore:
     ports:
-      - '8891:8890'
+      - '8892:8890'
     restart: 'no'
   jobs-controller:
     restart: 'no'
@@ -35,6 +35,15 @@ services:
     restart: 'no'
   identifier:
     restart: 'no'
+    ports:
+      - '81:80'
+    networks:
+      deltas-sync:
+        aliases:
+          - producer-identifier
+      default:
+        aliases:
+          - identifier
   dispatcher:
     restart: 'no'
   deltanotifier:
@@ -44,6 +53,10 @@ services:
   virtuoso:
     restart: 'no'
     ports:
-      - '8890:8890'
+      - '8891:8890'
   modified:
     restart: 'no'
+
+networks:
+  deltas-sync:
+    external: true
