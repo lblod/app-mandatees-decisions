@@ -27,9 +27,8 @@ services:
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
       DCR_DISABLE_INITIAL_SYNC: 'false'
-      DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'database'
-      PARALLEL_CALLS: '20'
+      DIRECT_DATABASE_ENDPOINT: 'database'
+      BATCH_SIZE: 500
   consumer-1:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -48,9 +47,8 @@ services:
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-1'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-1'
       DCR_DISABLE_INITIAL_SYNC: 'false'
-      DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'database'
-      PARALLEL_CALLS: '20'
+      DIRECT_DATABASE_ENDPOINT: 'database'
+      BATCH_SIZE: 500
   consumer-2:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -69,9 +67,8 @@ services:
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-2'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-2'
       DCR_DISABLE_INITIAL_SYNC: 'false'
-      DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'database'
-      PARALLEL_CALLS: '20'
+      DIRECT_DATABASE_ENDPOINT: 'database'
+      BATCH_SIZE: 500
   consumer-3:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -90,9 +87,8 @@ services:
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-3'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-3'
       DCR_DISABLE_INITIAL_SYNC: 'false'
-      DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'database'
-      PARALLEL_CALLS: '20'
+      DIRECT_DATABASE_ENDPOINT: 'database'
+      BATCH_SIZE: 500
   ######################
   # Producer services ##
   ######################
