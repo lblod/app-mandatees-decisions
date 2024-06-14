@@ -31,6 +31,8 @@ services:
     restart: 'no'
   delta-producer-background-jobs-initiator:
     restart: 'no'
+    environment:
+      NODE_ENV: development
   delta-producer-publication-graph-maintainer:
     restart: 'no'
   delta-producer-dump-file-publisher:
@@ -61,4 +63,5 @@ services:
 
 networks:
   deltas-sync:
-    external: true
+    driver: bridge
+    name: deltas-sync
