@@ -19,7 +19,9 @@
         "http://data.europa.eu/eli/ontology#changes",
         "http://www.w3.org/2002/07/owl#sameAs",
         "http://www.w3.org/ns/prov#wasDerivedFrom",
-        "http://www.w3.org/ns/prov#value"
+        "http://www.w3.org/ns/prov#value",
+        "http://mu.semte.ch/vocabularies/ext/bekrachtigtAanstellingVan",
+        "http://mu.semte.ch/vocabularies/ext/bekrachtigtOntslagVan"
       ],
       "healingOptions": {
         "http://data.europa.eu/eli/ontology#title": {
