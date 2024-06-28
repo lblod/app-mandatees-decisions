@@ -21,20 +21,33 @@ services:
       DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
   jobs-dashboard:
     restart: 'no'
+    ports:
+      - 82:80
   publication-triplestore:
     ports:
-      - '8891:8890'
+      - '8892:8890'
     restart: 'no'
   jobs-controller:
     restart: 'no'
   delta-producer-background-jobs-initiator:
     restart: 'no'
+    environment:
+      NODE_ENV: development
   delta-producer-publication-graph-maintainer:
     restart: 'no'
   delta-producer-dump-file-publisher:
     restart: 'no'
   identifier:
     restart: 'no'
+    ports:
+      - '81:80'
+    networks:
+      deltas-sync:
+        aliases:
+          - producer-identifier
+      default:
+        aliases:
+          - identifier
   dispatcher:
     restart: 'no'
   deltanotifier:
@@ -44,6 +57,11 @@ services:
   virtuoso:
     restart: 'no'
     ports:
-      - '8890:8890'
+      - '8891:8890'
   modified:
     restart: 'no'
+
+networks:
+  deltas-sync:
+    driver: bridge
+    name: deltas-sync

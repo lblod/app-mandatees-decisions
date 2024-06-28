@@ -16,6 +16,13 @@ defmodule Dispatcher do
     |> send_resp(200, "{ \"message\": \"ok\" }")
   end
 
+  #################################################################
+  # Deltas: mandatees-decisions
+  #################################################################
+
+  match "/sync/mandatees-decisions/files/*path", %{ layer: :api_services, accept: %{ json: true } } do
+    forward conn, path, "http://delta-producer-publication-graph-maintainer/mandatees-decisions/files/"
+  end
 
   #################################################################
   # Jobs-Dashboard: API
@@ -79,14 +86,6 @@ defmodule Dispatcher do
   match "/*path", %{ layer: :frontend_fallback, accept: %{ html: true } } do
     # we don't forward the path, because the app should take care of this in the browser.
     forward conn, [], "http://jobs-dashboard/index.html"
-  end
-
-  #################################################################
-  # Deltas: mandatees-decisions
-  #################################################################
-
-  get "/sync/submissions/files/*path", %{ layer: :api_services } do
-    forward conn, path, "http://delta-producer-publication-graph-maintainer/mandatees-decisions/files/"
   end
 
   #################################################################

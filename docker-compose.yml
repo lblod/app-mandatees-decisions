@@ -1,9 +1,8 @@
-x-logging:
-  &default-logging
-  driver: "json-file"
+x-logging: &default-logging
+  driver: 'json-file'
   options:
-    max-size: "10m"
-    max-file: "3"
+    max-size: '10m'
+    max-file: '3'
 
 services:
   ######################
@@ -19,18 +18,16 @@ services:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-0'
-      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
+      DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/' # QA endpoint
-      DCR_SYNC_FILES_PATH: "/sync/besluiten/files"
+      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
-      DCR_DISABLE_INITIAL_SYNC: 'false'
-      DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'database'
-      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
-      PARALLEL_CALLS: '20'
+      DCR_DISABLE_INITIAL_SYNC: false
+      DIRECT_DATABASE_ENDPOINT: 'database'
+      BATCH_SIZE: 500
   consumer-1:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -43,16 +40,14 @@ services:
       DCR_SERVICE_NAME: 'consumer-1'
       DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/' # QA endpoint
-      DCR_SYNC_FILES_PATH: "/sync/besluiten/files"
+      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-1'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-1'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-1'
-      DCR_DISABLE_INITIAL_SYNC: 'false'
-      DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'database'
-      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
-      PARALLEL_CALLS: '20'
+      DCR_DISABLE_INITIAL_SYNC: false
+      DIRECT_DATABASE_ENDPOINT: 'database'
+      BATCH_SIZE: 500
   consumer-2:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -65,16 +60,14 @@ services:
       DCR_SERVICE_NAME: 'consumer-2'
       DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/' # QA endpoint
-      DCR_SYNC_FILES_PATH: "/sync/besluiten/files"
+      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-2'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-2'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-2'
-      DCR_DISABLE_INITIAL_SYNC: 'false'
-      DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'database'
-      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
-      PARALLEL_CALLS: '20'
+      DCR_DISABLE_INITIAL_SYNC: false
+      DIRECT_DATABASE_ENDPOINT: 'database'
+      BATCH_SIZE: 500
   consumer-3:
     image: lblod/delta-consumer:0.0.24
     depends_on:
@@ -85,18 +78,16 @@ services:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
       DCR_SERVICE_NAME: 'consumer-3'
-      DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
+      DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/' # QA endpoint
-      DCR_SYNC_FILES_PATH: "/sync/besluiten/files"
+      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-3'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-3'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-3'
-      DCR_DISABLE_INITIAL_SYNC: 'false'
-      DCR_LANDING_ZONE_GRAPH: 'http://mu.semte.ch/graphs/landing-zone'
-      DCR_LANDING_ZONE_DATABASE: 'database'
-      INTERESTING_TYPES: 'http://data.vlaanderen.be/ns/besluit#Besluit, http://data.vlaanderen.be/ns/mandaat#Mandataris, http://www.w3.org/ns/person#Person'
-      PARALLEL_CALLS: '20'
+      DCR_DISABLE_INITIAL_SYNC: false
+      DIRECT_DATABASE_ENDPOINT: 'database'
+      BATCH_SIZE: 500
   ######################
   # Producer services ##
   ######################
@@ -108,17 +99,17 @@ services:
     volumes:
       - ./config/frontend:/config
     labels:
-      - "logging=true"
+      - 'logging=true'
     restart: always
     logging: *default-logging
     environment:
-      EMBER_AUTHENTICATION_ENABLED: "false"
-      EMBER_BESLUITEN_HARVESTING_ENABLED: "false"
-      EMBER_WORSHIP_HARVESTING_ENABLED: "false"
+      EMBER_AUTHENTICATION_ENABLED: false
+      EMBER_BESLUITEN_HARVESTING_ENABLED: false
+      EMBER_WORSHIP_HARVESTING_ENABLED: false
   publication-triplestore:
     image: redpencil/virtuoso:1.2.0-rc.1
     environment:
-      SPARQL_UPDATE: 'true'
+      SPARQL_UPDATE: true
       DEFAULT_GRAPH: 'http://mu.semte.ch/application'
     volumes:
       - ./data/publication-triplestore:/data
@@ -132,7 +123,7 @@ services:
     volumes:
       - ./config/jobs-controller/:/config/
     labels:
-      - "logging=true"
+      - 'logging=true'
     restart: always
     logging: *default-logging
   delta-producer-background-jobs-initiator:
@@ -140,23 +131,23 @@ services:
     volumes:
       - ./config/delta-producer/background-jobs-initiator:/config
     labels:
-      - "logging=true"
+      - 'logging=true'
     restart: always
     logging: *default-logging
   delta-producer-publication-graph-maintainer:
     image: lblod/delta-producer-publication-graph-maintainer:1.1.1
     environment:
-      MAX_BODY_SIZE: "50mb"
-      PRETTY_PRINT_DIFF_JSON: "true"
-      PUBLICATION_VIRTUOSO_ENDPOINT: "http://publication-triplestore:8890/sparql"
-      PUBLICATION_MU_AUTH_ENDPOINT: "http://publication-triplestore:8890/sparql"
-      SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: "404,500,503"
+      MAX_BODY_SIZE: '50mb'
+      PRETTY_PRINT_DIFF_JSON: true
+      PUBLICATION_VIRTUOSO_ENDPOINT: 'http://publication-triplestore:8890/sparql'
+      PUBLICATION_MU_AUTH_ENDPOINT: 'http://publication-triplestore:8890/sparql'
+      SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: '404,500,503'
       CONFIG_SERVICES_JSON_PATH: '/config/publication-graph-maintainer/config.json'
     volumes:
       - ./config/delta-producer:/config
       - ./data/files/:/share
     labels:
-      - "logging=true"
+      - 'logging=true'
     restart: always
     logging: *default-logging
   delta-producer-dump-file-publisher:
@@ -168,7 +159,7 @@ services:
       - ./config/delta-producer/dump-file-publisher:/config
       - ./data/files:/share
     labels:
-     - "logging=true"
+      - 'logging=true'
     restart: always
     logging: *default-logging
   ##################
@@ -176,8 +167,8 @@ services:
   ##################
   identifier:
     image: semtech/mu-identifier:1.10.1
-    ports:
-      - '80:80'
+    # ports:
+    #   - '80:80'
     labels:
       - 'logging=true'
     restart: always
@@ -199,7 +190,7 @@ services:
     image: semtech/mu-authorization:0.6.0-beta.8
     environment:
       MU_SPARQL_ENDPOINT: 'http://virtuoso:8890/sparql'
-      DATABASE_OVERLOAD_RECOVERY: 'true'
+      DATABASE_OVERLOAD_RECOVERY: true
       DATABASE_COMPATIBILITY: 'Virtuoso'
       QUERY_MAX_PROCESSING_TIME: 605000
       QUERY_MAX_EXECUTION_TIME: 605000
@@ -211,25 +202,25 @@ services:
   resource:
     image: semtech/mu-cl-resources:1.24.0
     environment:
-      CACHE_CLEAR_PATH: "http://cache/.mu/clear-keys"
+      CACHE_CLEAR_PATH: 'http://cache/.mu/clear-keys'
     volumes:
       - ./config/resources:/config
     restart: always
     labels:
-      - "logging=true"
+      - 'logging=true'
     logging: *default-logging
   file:
     image: semtech/mu-file-service:3.4.0
     volumes:
       - ./data/files:/share
     labels:
-      - "logging=true"
+      - 'logging=true'
     restart: always
     logging: *default-logging
   virtuoso:
     image: redpencil/virtuoso:1.2.0-rc.1
     environment:
-      SPARQL_UPDATE: 'true'
+      SPARQL_UPDATE: true
       DEFAULT_GRAPH: 'http://mu.semte.ch/application'
     volumes:
       - ./data/db:/data
