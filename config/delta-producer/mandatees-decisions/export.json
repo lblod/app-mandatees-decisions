@@ -30,71 +30,24 @@
       }
     },
     {
-      "type": "http://data.vlaanderen.be/ns/besluit#Besluit",
-      "graphsFilter": [
-        "http://mu.semte.ch/graphs/public"
-      ],
-      "properties": [
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-        "http://mu.semte.ch/vocabularies/core/uuid",
-        "http://data.europa.eu/eli/ontology#description",
-        "http://data.europa.eu/eli/ontology#title_short",
-        "http://data.vlaanderen.be/ns/besluit#motivering",
-        "http://data.europa.eu/eli/ontology#date_publication",
-        "http://data.europa.eu/eli/ontology#realizes",
-        "http://www.w3.org/ns/prov#wasGeneratedBy",
-        "http://data.europa.eu/eli/ontology#cites",
-        "http://data.europa.eu/eli/ontology#corrects",
-        "http://data.europa.eu/eli/ontology#corrected_by",
-        "http://data.europa.eu/eli/ontology#language",
-        "http://data.europa.eu/eli/ontology#title",
-        "http://data.europa.eu/eli/ontology#changed_by",
-        "http://data.europa.eu/eli/ontology#changes",
-        "http://www.w3.org/2002/07/owl#sameAs",
-        "http://data.europa.eu/eli/ontology#passed_by",
-        "http://data.europa.eu/eli/ontology#has_part",
-        "http://data.europa.eu/eli/ontology#date_no_longer_in_force",
-        "http://data.europa.eu/eli/ontology#first_date_entry_in_force",
-        "http://data.europa.eu/eli/ontology#type_document",
-        "http://www.w3.org/ns/prov#wasDerivedFrom",
-        "http://www.w3.org/ns/prov#value"
-      ],
-      "healingOptions": {
-        "http://data.europa.eu/eli/ontology#description": {
-          "queryChunkSize": 100000
-        },
-        "http://data.vlaanderen.be/ns/besluit#motivering": {
-          "queryChunkSize": 50000
-        },
-        "http://data.europa.eu/eli/ontology#title": {
-          "queryChunkSize": 100000
-        },
-        "http://www.w3.org/ns/prov#value": {
-          "queryChunkSize": 50000
-        }
-      }
-    },
-    {
       "type": "http://data.vlaanderen.be/ns/mandaat#Mandataris",
       "graphsFilter": [
         "http://mu.semte.ch/graphs/public"
       ],
       "properties": [
-        "http://data.vlaanderen.be/ns/besluit#heeftAanwezige",
-        "http://data.vlaanderen.be/ns/besluit#heeftTegenstander",
-        "http://data.vlaanderen.be/ns/mandaat#isBestuurlijkeAliasVan",
-        "http://data.vlaanderen.be/ns/besluit#heeftStemmer",
-        "http://mu.semte.ch/vocabularies/core/uuid",
-        "https://data.vlaanderen.be/ns/persoon#gebruikteVoornaam",
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-        "http://data.vlaanderen.be/ns/besluit#aantalTegenstanders",
-        "http://data.vlaanderen.be/ns/besluit#aantalVoorstanders",
-        "http://data.vlaanderen.be/ns/besluit#heeftOnthouder",
+        "http://mu.semte.ch/vocabularies/core/uuid",
+        "http://data.vlaanderen.be/ns/mandaat#status",
+        "http://data.vlaanderen.be/ns/mandaat#start",
+        "http://data.vlaanderen.be/ns/mandaat#einde",
+        "http://www.w3.org/ns/org#hasMembership",
+        "http://www.w3.org/ns/org#holds",
+        "http://data.vlaanderen.be/ns/mandaat#beleidsdomein",
+        "http://data.vlaanderen.be/ns/mandaat#rangorde",
+        "http://data.vlaanderen.be/ns/mandaat#isBestuurlijkeAliasVan",
+        "https://data.vlaanderen.be/ns/persoon#gebruikteVoornaam",
         "http://xmlns.com/foaf/0.1/familyName",
-        "http://www.w3.org/ns/prov#wasDerivedFrom",
-        "http://data.vlaanderen.be/ns/besluit#heeftVoorzitter",
-        "http://data.vlaanderen.be/ns/besluit#aantalOnthouders",
-        "http://data.vlaanderen.be/ns/besluit#heeftVoorstander"
+        "http://www.w3.org/ns/prov#wasDerivedFrom"
       ],
       "healingOptions": {}
     }
