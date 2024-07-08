@@ -80,21 +80,19 @@
         "http://mu.semte.ch/graphs/public"
       ],
       "properties": [
-        "http://data.vlaanderen.be/ns/besluit#heeftAanwezige",
-        "http://data.vlaanderen.be/ns/besluit#heeftTegenstander",
-        "http://data.vlaanderen.be/ns/mandaat#isBestuurlijkeAliasVan",
-        "http://data.vlaanderen.be/ns/besluit#heeftStemmer",
-        "http://mu.semte.ch/vocabularies/core/uuid",
-        "https://data.vlaanderen.be/ns/persoon#gebruikteVoornaam",
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-        "http://data.vlaanderen.be/ns/besluit#aantalTegenstanders",
-        "http://data.vlaanderen.be/ns/besluit#aantalVoorstanders",
-        "http://data.vlaanderen.be/ns/besluit#heeftOnthouder",
+        "http://mu.semte.ch/vocabularies/core/uuid",
+        "http://data.vlaanderen.be/ns/mandaat#status",
+        "http://data.vlaanderen.be/ns/mandaat#start",
+        "http://data.vlaanderen.be/ns/mandaat#einde",
+        "http://www.w3.org/ns/org#hasMembership",
+        "http://www.w3.org/ns/org#holds",
+        "http://data.vlaanderen.be/ns/mandaat#beleidsdomein",
+        "http://data.vlaanderen.be/ns/mandaat#rangorde",
+        "http://data.vlaanderen.be/ns/mandaat#isBestuurlijkeAliasVan",
+        "https://data.vlaanderen.be/ns/persoon#gebruikteVoornaam",
         "http://xmlns.com/foaf/0.1/familyName",
-        "http://www.w3.org/ns/prov#wasDerivedFrom",
-        "http://data.vlaanderen.be/ns/besluit#heeftVoorzitter",
-        "http://data.vlaanderen.be/ns/besluit#aantalOnthouders",
-        "http://data.vlaanderen.be/ns/besluit#heeftVoorstander"
+        "http://www.w3.org/ns/prov#wasDerivedFrom"
       ],
       "healingOptions": {}
     }
