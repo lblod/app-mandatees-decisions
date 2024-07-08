@@ -96,6 +96,8 @@ services:
     #  but it uses the common job model and has a sparql interface; so it covers a lot of useful features.
     #  Somday; I geuss we'll have a cleaner version
     image: lblod/frontend-harvesting-self-service:2.1.5
+    profiles:
+      - frontend
     volumes:
       - ./config/frontend:/config
     labels:
