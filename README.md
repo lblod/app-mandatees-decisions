@@ -8,6 +8,10 @@ Monitoring the endpoints where the "besluiten" are harvested. This is done by us
 
 These values can be added as the **DCR_SYNC_BASE_URL**.
 
+### DEV
+
+- https://dev.harvesting-self-service.lblod.info
+
 ### QA
 
 - https://lokaalbeslist-harvester-0.s.redhost.be/
