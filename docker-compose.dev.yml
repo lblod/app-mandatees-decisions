@@ -2,20 +2,27 @@ services:
   consumer-0:
     restart: 'no'
     environment:
+      DCR_SYNC_BASE_URL: 'https://dev.harvesting-self-service.lblod.info/'
       DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
       DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
   consumer-1:
     restart: 'no'
+    profiles:
+      - qaConsumer-1
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
       DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
   consumer-2:
     restart: 'no'
+    profiles:
+      - qaConsumer-2
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
       DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
   consumer-3:
     restart: 'no'
+    profiles:
+      - qaConsumer-3
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
       DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
