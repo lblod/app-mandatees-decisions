@@ -26,6 +26,12 @@
       "healingOptions": {
         "http://data.europa.eu/eli/ontology#title": {
           "queryChunkSize": 100000
+        },
+        "http://data.europa.eu/eli/ontology#number": {
+          "queryChunkSize": 50000
+        },
+        "http://www.w3.org/ns/prov#value": {
+          "queryChunkSize": 50000
         }
       }
     },
