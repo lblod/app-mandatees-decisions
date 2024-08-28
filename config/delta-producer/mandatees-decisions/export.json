@@ -61,7 +61,9 @@
         "http://data.europa.eu/eli/ontology#first_date_entry_in_force",
         "http://data.europa.eu/eli/ontology#type_document",
         "http://www.w3.org/ns/prov#wasDerivedFrom",
-        "http://www.w3.org/ns/prov#value"
+        "http://www.w3.org/ns/prov#value",
+        "http://data.vlaanderen.be/ns/mandaat#bekrachtigtAanstellingVan",
+        "http://data.vlaanderen.be/ns/mandaat#bekrachtigtOntslagVan"
       ],
       "healingOptions": {
         "http://data.europa.eu/eli/ontology#description": {
