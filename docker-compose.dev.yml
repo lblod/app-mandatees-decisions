@@ -30,6 +30,12 @@ services:
   #   environment:
   #     DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
   #     DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+  ldes-delta-pusher:
+    restart: no
+    environment:
+      NODE_ENV: development
+    ports:
+      - 9225:9229
   identifier:
     restart: 'no'
     ports:
