@@ -19,8 +19,7 @@ services:
     environment:
       DCR_SERVICE_NAME: 'consumer-0'
       DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be' # QA endpoint
-      # DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/' # QA endpoint
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/' # QA endpoint
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
@@ -29,7 +28,7 @@ services:
       DCR_DISABLE_INITIAL_SYNC: false
       DCR_WAIT_FOR_INITIAL_SYNC: true
       DCR_DISABLE_DELTA_INGEST: true
-      INGEST_GRAPH: http://decision-ingest
+      INGEST_GRAPH: http://mu.semte.ch/graphs/consumed-decisions
       BATCH_SIZE: 500
     profiles:
       - run
@@ -94,81 +93,48 @@ services:
   #     DIRECT_DATABASE_ENDPOINT: 'database'
   #     BATCH_SIZE: 500
   ######################
-  # Producer services ##
+  # LDES              ##
   ######################
-  jobs-dashboard:
-    # Note: the following dashboard is a bit of a stretch to use here; since intially tailored towards harvesting
-    #  but it uses the common job model and has a sparql interface; so it covers a lot of useful features.
-    #  Somday; I geuss we'll have a cleaner version
-    image: lblod/frontend-harvesting-self-service:2.1.5
+  ldes-backend:
+    image: redpencil/fragmentation-producer:0.4.1
+    restart: always
+    logging: *default-logging
+    labels:
+      - "logging=true"
+    environment:
+      BASE_URL: "http://localhost/streams/ldes/"
+      FOLDER_DEPTH: 1
+      PAGE_RESOURCES_COUNT: 20
+      TIME_TREE_RELATION_PATH: "http://www.w3.org/ns/prov#generatedAtTime"
+      CACHE_SIZE: 10
+      DATA_FOLDER: "/data"
+      ENABLE_AUTH: "false"
+    volumes:
+      - "./data/ldes-feed/:/data/"
     profiles:
-      - frontend
-    volumes:
-      - ./config/frontend:/config
-    labels:
-      - 'logging=true'
-    restart: always
-    logging: *default-logging
+      - ldes
+  ldes-delta-pusher:
+    image: redpencil/ldes-delta-pusher:0.6.2
     environment:
-      EMBER_AUTHENTICATION_ENABLED: false
-      EMBER_BESLUITEN_HARVESTING_ENABLED: false
-      EMBER_WORSHIP_HARVESTING_ENABLED: false
-  publication-triplestore:
-    image: redpencil/virtuoso:1.2.0-rc.1
-    environment:
-      SPARQL_UPDATE: true
-      DEFAULT_GRAPH: 'http://mu.semte.ch/application'
+      LDES_ENDPOINT: http://ldes-backend
+      LDES_BASE: http://localhost/streams/ldes
+      CRON_HEALING: 0 0 0 * * * # Every day at midnight
+      AUTO_HEALING: falsef
+      SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: 429,500,502,503,504
+      MAX_PAGE_SIZE_BYTES: 10000000
+      INITIAL_STATE_LIMIT: 10000
+      DIRECT_DB_ENDPOINT: http://virtuoso:8890/sparql
+      WRITE_INITIAL_STATE: true
     volumes:
-      - ./data/publication-triplestore:/data
-      - ./config/publication-triplestore/virtuoso-qa.ini:/data/virtuoso.ini
-      - ./config/publication-triplestore/:/opt/virtuoso-scripts
-    labels:
-      - 'logging=true'
+      - ./config/ldes-delta-pusher/:/config/
+      - ./data/ldes-feed/:/data/
     restart: always
-  jobs-controller:
-    image: lblod/job-controller-service:1.0.1
-    volumes:
-      - ./config/jobs-controller/:/config/
     labels:
-      - 'logging=true'
-    restart: always
-    logging: *default-logging
-  delta-producer-background-jobs-initiator:
-    image: lblod/delta-producer-background-jobs-initiator:1.0.1
-    volumes:
-      - ./config/delta-producer/background-jobs-initiator:/config
-    labels:
-      - 'logging=true'
-    restart: always
-    logging: *default-logging
-  delta-producer-publication-graph-maintainer:
-    image: lblod/delta-producer-publication-graph-maintainer:1.1.1
-    environment:
-      MAX_BODY_SIZE: '50mb'
-      PRETTY_PRINT_DIFF_JSON: true
-      PUBLICATION_VIRTUOSO_ENDPOINT: 'http://publication-triplestore:8890/sparql'
-      PUBLICATION_MU_AUTH_ENDPOINT: 'http://publication-triplestore:8890/sparql'
-      SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: '404,500,503'
-      CONFIG_SERVICES_JSON_PATH: '/config/publication-graph-maintainer/config.json'
-    volumes:
-      - ./config/delta-producer:/config
-      - ./data/files/:/share
-    labels:
-      - 'logging=true'
-    restart: always
-    logging: *default-logging
-  delta-producer-dump-file-publisher:
-    image: lblod/delta-producer-dump-file-publisher:0.10.3
-    environment:
-      EXPORT_TTL_BATCH_SIZE: 20
-      MAX_SUBJECT_COUNT: 1000000
-    volumes:
-      - ./config/delta-producer/dump-file-publisher:/config
-      - ./data/files:/share
-    labels:
-      - 'logging=true'
-    restart: always
-    logging: *default-logging
+      - "logging=true"
+    links:
+      - virtuoso:database
+    profiles:
+      - ldes
   ##################
   # Base services ##
   ##################
