@@ -28,7 +28,7 @@ services:
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
-      INGEST_GRAPH: http://mu.semte.ch/graphs/consumed-decisions
+      INGEST_GRAPH: http://mu.semte.ch/graphs/besluiten-consumed
       BATCH_SIZE: 500
     profiles:
       - run
