@@ -9,7 +9,7 @@ services:
   # Consumer services ##
   ######################
   consumer-0:
-    image: lblod/delta-consumer:0.0.24
+    image: lblod/delta-consumer:0.0.26
     depends_on:
       - database
       - virtuoso
@@ -19,6 +19,7 @@ services:
     environment:
       DCR_SERVICE_NAME: 'consumer-0'
       DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
+      DCR_START_FROM_DELTA_TIMESTAMP: '2024-10-01'
       DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/' # QA endpoint
       DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
       DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
@@ -32,66 +33,81 @@ services:
       BATCH_SIZE: 500
     profiles:
       - run
-  # consumer-1:
-  #   image: lblod/delta-consumer:0.0.24
-  #   depends_on:
-  #     - database
-  #     - virtuoso
-  #   restart: always
-  #   volumes:
-  #     - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
-  #   environment:
-  #     DCR_SERVICE_NAME: 'consumer-1'
-  #     DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
-  #     DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/' # QA endpoint
-  #     DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-  #     DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
-  #     DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-1'
-  #     DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-1'
-  #     DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-1'
-  #     DCR_DISABLE_INITIAL_SYNC: false
-  #     DIRECT_DATABASE_ENDPOINT: 'database'
-  #     BATCH_SIZE: 500
-  # consumer-2:
-  #   image: lblod/delta-consumer:0.0.24
-  #   depends_on:
-  #     - database
-  #     - virtuoso
-  #   restart: always
-  #   volumes:
-  #     - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
-  #   environment:
-  #     DCR_SERVICE_NAME: 'consumer-2'
-  #     DCR_CRON_PATTERN_DELTA_SYNC: '15 * * * *'
-  #     DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/' # QA endpoint
-  #     DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-  #     DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
-  #     DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-2'
-  #     DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-2'
-  #     DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-2'
-  #     DCR_DISABLE_INITIAL_SYNC: false
-  #     DIRECT_DATABASE_ENDPOINT: 'database'
-  #     BATCH_SIZE: 500
-  # consumer-3:
-  #   image: lblod/delta-consumer:0.0.24
-  #   depends_on:
-  #     - database
-  #     - virtuoso
-  #   restart: always
-  #   volumes:
-  #     - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
-  #   environment:
-  #     DCR_SERVICE_NAME: 'consumer-3'
-  #     DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
-  #     DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/' # QA endpoint
-  #     DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-  #     DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
-  #     DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten-3'
-  #     DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing-3'
-  #     DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer-3'
-  #     DCR_DISABLE_INITIAL_SYNC: false
-  #     DIRECT_DATABASE_ENDPOINT: 'database'
-  #     BATCH_SIZE: 500
+  consumer-1:
+    image: lblod/delta-consumer:0.0.26
+    depends_on:
+      - database
+      - virtuoso
+    restart: always
+    volumes:
+      - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
+    environment:
+      DCR_SERVICE_NAME: 'consumer-1'
+      DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
+      DCR_START_FROM_DELTA_TIMESTAMP: '2024-10-01'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/'
+      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
+      DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
+      DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
+      DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
+      DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
+      DCR_DISABLE_INITIAL_SYNC: true
+      DCR_WAIT_FOR_INITIAL_SYNC: false
+      DCR_DISABLE_DELTA_INGEST: false
+      INGEST_GRAPH: http://mu.semte.ch/graphs/besluiten-consumed
+      BATCH_SIZE: 500
+    profiles:
+      - run
+  consumer-2:
+    image: lblod/delta-consumer:0.0.26
+    depends_on:
+      - database
+      - virtuoso
+    restart: always
+    volumes:
+      - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
+    environment:
+      DCR_SERVICE_NAME: 'consumer-2'
+      DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
+      DCR_START_FROM_DELTA_TIMESTAMP: '2024-10-01'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/'
+      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
+      DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
+      DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
+      DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
+      DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
+      DCR_DISABLE_INITIAL_SYNC: true
+      DCR_WAIT_FOR_INITIAL_SYNC: false
+      DCR_DISABLE_DELTA_INGEST: false
+      INGEST_GRAPH: http://mu.semte.ch/graphs/besluiten-consumed
+      BATCH_SIZE: 500
+    profiles:
+      - run
+  consumer-3:
+    image: lblod/delta-consumer:0.0.26
+    depends_on:
+      - database
+      - virtuoso
+    restart: always
+    volumes:
+      - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
+    environment:
+      DCR_SERVICE_NAME: 'consumer-3'
+      DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
+      DCR_START_FROM_DELTA_TIMESTAMP: '2024-10-01'
+      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/'
+      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
+      DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
+      DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
+      DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
+      DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
+      DCR_DISABLE_INITIAL_SYNC: true
+      DCR_WAIT_FOR_INITIAL_SYNC: false
+      DCR_DISABLE_DELTA_INGEST: false
+      INGEST_GRAPH: http://mu.semte.ch/graphs/besluiten-consumed
+      BATCH_SIZE: 500
+    profiles:
+      - run
   ######################
   # LDES              ##
   ######################
@@ -102,7 +118,7 @@ services:
     labels:
       - "logging=true"
     environment:
-      BASE_URL: "http://localhost/streams/ldes/"
+      BASE_URL: "http://localhost/streams/ldes/" # TODO: updated to actually url
       FOLDER_DEPTH: 1
       PAGE_RESOURCES_COUNT: 20
       TIME_TREE_RELATION_PATH: "http://www.w3.org/ns/prov#generatedAtTime"
@@ -115,7 +131,7 @@ services:
     image: redpencil/ldes-delta-pusher:0.6.2
     environment:
       LDES_ENDPOINT: http://ldes-backend
-      LDES_BASE: http://localhost/streams/ldes/public
+      LDES_BASE: http://localhost/streams/ldes/public # TODO: updated to actually url
       CRON_HEALING: 0 0 0 * * * # Every day at midnight
       AUTO_HEALING: falsef
       SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: 429,500,502,503,504
