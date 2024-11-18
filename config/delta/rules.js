@@ -7,7 +7,7 @@ export default [
       },
       graph: {
         type: 'uri',
-        value: 'http://mu.semte.ch/graphs/besluiten-consumed'
+        value: 'http://mu.semte.ch/graphs/public'
       }
     },
     callback: {
@@ -29,7 +29,7 @@ export default [
       },
       graph: {
         type: 'uri',
-        value: 'http://mu.semte.ch/graphs/besluiten-consumed'
+        value: 'http://mu.semte.ch/graphs/public'
       }
     },
     callback: {

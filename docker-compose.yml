@@ -29,7 +29,7 @@ services:
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
-      INGEST_GRAPH: http://mu.semte.ch/graphs/besluiten-consumed
+      INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
     profiles:
       - run
@@ -54,7 +54,7 @@ services:
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
-      INGEST_GRAPH: http://mu.semte.ch/graphs/besluiten-consumed
+      INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
     profiles:
       - run
@@ -79,7 +79,7 @@ services:
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
-      INGEST_GRAPH: http://mu.semte.ch/graphs/besluiten-consumed
+      INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
     profiles:
       - run
@@ -104,7 +104,7 @@ services:
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
-      INGEST_GRAPH: http://mu.semte.ch/graphs/besluiten-consumed
+      INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
     profiles:
       - run
@@ -177,18 +177,22 @@ services:
       - debug
       - default
   database:
-    image: semtech/mu-authorization:0.6.0-beta.8
+    image: semtech/sparql-parser:0.0.8
     environment:
-      MU_SPARQL_ENDPOINT: 'http://virtuoso:8890/sparql'
-      DATABASE_OVERLOAD_RECOVERY: true
-      DATABASE_COMPATIBILITY: 'Virtuoso'
+      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
+      DATABASE_OVERLOAD_RECOVERY: "true"
+      DATABASE_COMPATIBILITY: "Virtuoso"
+      # Note: not sure wether it gets picked up properly, it is meant for healing-process which may make
+      # heavy queries
       QUERY_MAX_PROCESSING_TIME: 605000
       QUERY_MAX_EXECUTION_TIME: 605000
     volumes:
-      - ./config/authorization:/config
+      - ./config/cl-authorization:/config
+      - ./data/mu-auth:/data
     labels:
-      - 'logging=true'
+      - "logging=true"
     restart: always
+    logging: *default-logging
     networks:
       - debug
       - default
