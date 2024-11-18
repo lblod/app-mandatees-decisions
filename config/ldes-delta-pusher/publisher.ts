@@ -5,7 +5,6 @@ import fetch from "node-fetch";
 import { log } from "./logger";
 import {
   defaultProperties,
-  ldesInstances,
   officialPredicates,
 } from "./ldes-instances";
 

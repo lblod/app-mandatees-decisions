@@ -9,6 +9,8 @@ services:
       NODE_ENV: development
     ports:
       - 9224:9229
+    networks:
+      - debug
   # consumer-1:
   #   restart: 'no'
   #   profiles:
@@ -41,26 +43,25 @@ services:
     ports:
       - '81:80'
     networks:
-      deltas-sync:
-        aliases:
-          - producer-identifier
-      default:
-        aliases:
-          - identifier
+      - debug
   dispatcher:
     restart: 'no'
   deltanotifier:
     restart: 'no'
   database:
     restart: 'no'
+    networks:
+      - debug
   virtuoso:
     restart: 'no'
     ports:
       - '8891:8890'
+    networks:
+      - debug
   modified:
     restart: 'no'
 
 networks:
-  deltas-sync:
+  debug:
     driver: bridge
-    name: deltas-sync
+    name: debug

@@ -111,13 +111,11 @@ services:
       ENABLE_AUTH: "false"
     volumes:
       - "./data/ldes-feed/:/data/"
-    profiles:
-      - ldes
   ldes-delta-pusher:
     image: redpencil/ldes-delta-pusher:0.6.2
     environment:
       LDES_ENDPOINT: http://ldes-backend
-      LDES_BASE: http://localhost/streams/ldes
+      LDES_BASE: http://ldes-backend
       CRON_HEALING: 0 0 0 * * * # Every day at midnight
       AUTO_HEALING: falsef
       SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: 429,500,502,503,504
