@@ -1,10 +1,10 @@
+import { ARTIKEL_TYPE_URI, BESLUIT_TYPE_URI } from './handle-types-util';
+
 export const ldesInstances = {
   public: {
     entities: {
-      "http://data.vlaanderen.be/ns/besluit#Artikel": {
-      },
-      "http://data.vlaanderen.be/ns/besluit#Besluit": {
-      },
+      ARTIKEL_TYPE_URI: {},
+      BESLUIT_TYPE_URI: {},
     },
   }
 };
@@ -17,13 +17,13 @@ export const defaultProperties = [
 ];
 
 export const officialPredicates = {
-  "http://data.vlaanderen.be/ns/besluit#Artikel": [
+  ARTIKEL_TYPE_URI: [
     "http://data.vlaanderen.be/ns/mandaat#bekrachtigtAanstellingVan",
     "http://data.vlaanderen.be/ns/mandaat#bekrachtigtOntslagVan",
     "http://data.europa.eu/eli/ontology#date_publication",
     "http://data.europa.eu/eli/ontology#title",
   ],
-  "http://data.vlaanderen.be/ns/besluit#Besluit": [
+  BESLUIT_TYPE_URI: [
     "http://data.vlaanderen.be/ns/mandaat#bekrachtigtAanstellingVan",
     "http://data.vlaanderen.be/ns/mandaat#bekrachtigtOntslagVan",
     "http://data.europa.eu/eli/ontology#date_publication",
