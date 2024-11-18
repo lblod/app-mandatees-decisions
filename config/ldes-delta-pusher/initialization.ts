@@ -1,8 +1,6 @@
-import { ARTIKEL_TYPE_URI, BESLUIT_TYPE_URI } from './handle-types-util';
-
 export const initialization = {
   public: {
-    ARTIKEL_TYPE_URI: {},
-    BESLUIT_TYPE_URI: {},
+    "http://data.vlaanderen.be/ns/besluit#Artikel": {},
+    "http://data.vlaanderen.be/ns/besluit#Besluit": {},
   },
 };

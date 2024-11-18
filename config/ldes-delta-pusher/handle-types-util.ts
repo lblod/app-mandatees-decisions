@@ -2,9 +2,6 @@ import { Changeset } from "../types";
 import { log } from "./logger";
 import { InterestingSubject, publish } from "./publisher";
 
-export const ARTIKEL_TYPE_URI = "http://data.vlaanderen.be/ns/besluit#Artikel";
-export const BESLUIT_TYPE_URI = "http://data.vlaanderen.be/ns/besluit#Besluit";
-
 type SubjectFilter = (subjects: string[]) => Promise<InterestingSubject[]>;
 type SubjectAddition = (subject: InterestingSubject) => Promise<string>;
 

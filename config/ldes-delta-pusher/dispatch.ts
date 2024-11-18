@@ -1,7 +1,7 @@
 import { Changeset } from "../types";
 import { querySudo } from "@lblod/mu-auth-sudo";
 
-import { ARTIKEL_TYPE_URI, BESLUIT_TYPE_URI, publishInterestingSubjects } from "./handle-types-util";
+import { publishInterestingSubjects } from "./handle-types-util";
 import { InterestingSubject } from "./publisher";
 
 export default async function dispatch(changesets: Changeset[]) {
@@ -12,8 +12,8 @@ const interestingSubjects = async (
   subjects: string[]
 ): Promise<InterestingSubject[]> => {
   const types = [
-    ARTIKEL_TYPE_URI,
-    BESLUIT_TYPE_URI
+    "http://data.vlaanderen.be/ns/besluit#Artikel",
+    "http://data.vlaanderen.be/ns/besluit#Besluit"
   ];
   const matches = await querySudo(`
     PREFIX mandaat: <http://data.vlaanderen.be/ns/mandaat#>
