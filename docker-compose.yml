@@ -25,9 +25,9 @@ services:
       DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
       DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
       DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
-      DCR_DISABLE_INITIAL_SYNC: false
-      DCR_WAIT_FOR_INITIAL_SYNC: true
-      DCR_DISABLE_DELTA_INGEST: true
+      DCR_DISABLE_INITIAL_SYNC: true
+      DCR_WAIT_FOR_INITIAL_SYNC: false
+      DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/consumed-decisions
       BATCH_SIZE: 500
     profiles:
@@ -115,7 +115,7 @@ services:
     image: redpencil/ldes-delta-pusher:0.6.2
     environment:
       LDES_ENDPOINT: http://ldes-backend
-      LDES_BASE: http://ldes-backend
+      LDES_BASE: http://localhost/streams/ldes/public
       CRON_HEALING: 0 0 0 * * * # Every day at midnight
       AUTO_HEALING: falsef
       SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: 429,500,502,503,504
@@ -157,6 +157,9 @@ services:
     labels:
       - 'logging=true'
     restart: always
+    networks:
+      - debug
+      - default
   database:
     image: semtech/mu-authorization:0.6.0-beta.8
     environment:
@@ -170,6 +173,9 @@ services:
     labels:
       - 'logging=true'
     restart: always
+    networks:
+      - debug
+      - default
   resource:
     image: semtech/mu-cl-resources:1.24.0
     environment:
