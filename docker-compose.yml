@@ -1,3 +1,5 @@
+version: "3.7"
+
 x-logging: &default-logging
   driver: json-file
   options:
@@ -31,8 +33,6 @@ services:
       DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
-    profiles:
-      - run
   consumer-1:
     image: lblod/delta-consumer:0.0.26
     depends_on:
@@ -56,8 +56,6 @@ services:
       DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
-    profiles:
-      - run
   consumer-2:
     image: lblod/delta-consumer:0.0.26
     depends_on:
@@ -81,8 +79,6 @@ services:
       DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
-    profiles:
-      - run
   consumer-3:
     image: lblod/delta-consumer:0.0.26
     depends_on:
@@ -106,8 +102,6 @@ services:
       DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
-    profiles:
-      - run
   ######################
   # LDES              ##
   ######################
@@ -147,8 +141,6 @@ services:
       - "logging=true"
     links:
       - virtuoso:database
-    profiles:
-      - ldes
   ##################
   # Base services ##
   ##################
@@ -171,9 +163,6 @@ services:
     labels:
       - logging=true
     restart: always
-    networks:
-      - debug
-      - default
   database:
     image: semtech/sparql-parser:0.0.8
     environment:
@@ -184,6 +173,13 @@ services:
       # heavy queries
       QUERY_MAX_PROCESSING_TIME: 605000
       QUERY_MAX_EXECUTION_TIME: 605000
+      LOG_SERVER_CONFIGURATION: "true"
+      LOG_DELTA_MESSAGES: "false"
+      LOG_OUTGOING_SPARQL_QUERIES: "true"
+      LOG_INCOMING_SPARQL_QUERIES: "true"
+      LOG_TEMPLATE_MATCHER_PERFORMANCE: "false"
+      LOG_ACCESS_RIGHTS: "false"
+      INSPECT_ACCESS_RIGHTS_PROCESSING: "false"
     volumes:
       - ./config/cl-authorization:/config
       - ./data/mu-auth:/data
@@ -191,9 +187,6 @@ services:
       - "logging=true"
     restart: always
     logging: *default-logging
-    networks:
-      - debug
-      - default
   virtuoso:
     image: redpencil/virtuoso:1.2.0-rc.1
     environment:
@@ -206,3 +199,14 @@ services:
     labels:
       - logging=true
     restart: always
+  migrations:
+    image: semtech/mu-migrations-service:0.6.0
+    environment:
+      MU_SPARQL_TIMEOUT: "300"
+      MU_SPARQL_ENDPOINT: http://virtuoso:8890/sparql
+    volumes:
+      - ./config/migrations:/data/migrations
+    labels:
+      - "logging=true"
+    restart: always
+    logging: *default-logging
