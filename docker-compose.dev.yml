@@ -3,35 +3,28 @@ services:
   # Consumer services ##
   ######################
   consumer-0:
-    restart: 'no'
+    restart: no
     environment:
-      # DCR_SYNC_BASE_URL: 'https://dev.harvesting-self-service.lblod.info/'
-      DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+      DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
       NODE_ENV: development
     ports:
       - 9224:9229
     networks:
       - debug
   consumer-1:
-    restart: 'no'
-    profiles:
-      - qaConsumer-1
+    restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+      DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
       NODE_ENV: development
   consumer-2:
-    restart: 'no'
+    restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+      DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
       NODE_ENV: development
   consumer-3:
-    restart: 'no'
+    restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+      DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
       NODE_ENV: development
   ######################
   # LDES              ##
@@ -53,27 +46,25 @@ services:
   # Base services ##
   ##################
   identifier:
-    restart: 'no'
+    restart: no
     ports:
-      - '81:80'
+      - 81:80
     networks:
       - debug
   dispatcher:
-    restart: 'no'
+    restart: no
   deltanotifier:
-    restart: 'no'
+    restart: no
   database:
-    restart: 'no'
+    restart: no
     networks:
       - debug
   virtuoso:
-    restart: 'no'
+    restart: no
     ports:
-      - '8891:8890'
+      - 8891:8890
     networks:
       - debug
-  modified:
-    restart: 'no'
 
 networks:
   debug:

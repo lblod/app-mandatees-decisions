@@ -1,8 +1,8 @@
 x-logging: &default-logging
-  driver: 'json-file'
+  driver: json-file
   options:
-    max-size: '10m'
-    max-file: '3'
+    max-size: 10m
+    max-file: 3
 
 services:
   ######################
@@ -17,15 +17,15 @@ services:
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
-      DCR_SERVICE_NAME: 'consumer-0'
+      DCR_SERVICE_NAME: consumer-0
       DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-10-01'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-0.s.redhost.be/' # QA endpoint
-      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
-      DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
-      DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
-      DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
+      DCR_START_FROM_DELTA_TIMESTAMP: 2024-10-01
+      DCR_SYNC_BASE_URL: https://lokaalbeslist-harvester-0.s.redhost.be/
+      DCR_SYNC_FILES_PATH: /sync/besluiten/files
+      DCR_SYNC_DATASET_SUBJECT: http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump
+      DCR_INITIAL_SYNC_JOB_OPERATION: http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten
+      DCR_DELTA_SYNC_JOB_OPERATION: http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing
+      DCR_JOB_CREATOR_URI: http://data.lblod.info/services/id/besluiten-consumer
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
@@ -42,15 +42,15 @@ services:
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
-      DCR_SERVICE_NAME: 'consumer-1'
+      DCR_SERVICE_NAME: consumer-1
       DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-10-01'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-1.s.redhost.be/'
-      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
-      DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
-      DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
-      DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
+      DCR_START_FROM_DELTA_TIMESTAMP: 2024-10-01
+      DCR_SYNC_BASE_URL: https://lokaalbeslist-harvester-1.s.redhost.be/
+      DCR_SYNC_FILES_PATH: /sync/besluiten/files
+      DCR_SYNC_DATASET_SUBJECT: http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump
+      DCR_INITIAL_SYNC_JOB_OPERATION: http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten
+      DCR_DELTA_SYNC_JOB_OPERATION: http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing
+      DCR_JOB_CREATOR_URI: http://data.lblod.info/services/id/besluiten-consumer
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
@@ -67,15 +67,15 @@ services:
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
-      DCR_SERVICE_NAME: 'consumer-2'
+      DCR_SERVICE_NAME: consumer-2
       DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-10-01'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-2.s.redhost.be/'
-      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
-      DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
-      DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
-      DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
+      DCR_START_FROM_DELTA_TIMESTAMP: 2024-10-01
+      DCR_SYNC_BASE_URL: https://lokaalbeslist-harvester-2.s.redhost.be/
+      DCR_SYNC_FILES_PATH: /sync/besluiten/files
+      DCR_SYNC_DATASET_SUBJECT: http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump
+      DCR_INITIAL_SYNC_JOB_OPERATION: http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten
+      DCR_DELTA_SYNC_JOB_OPERATION: http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing
+      DCR_JOB_CREATOR_URI: http://data.lblod.info/services/id/besluiten-consumer
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
@@ -92,15 +92,15 @@ services:
     volumes:
       - ./config/consumer/custom-dispatching:/config/triples-dispatching/custom-dispatching
     environment:
-      DCR_SERVICE_NAME: 'consumer-3'
+      DCR_SERVICE_NAME: consumer-3
       DCR_CRON_PATTERN_DELTA_SYNC: 15 * * * *
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-10-01'
-      DCR_SYNC_BASE_URL: 'https://lokaalbeslist-harvester-3.s.redhost.be/'
-      DCR_SYNC_FILES_PATH: '/sync/besluiten/files'
-      DCR_SYNC_DATASET_SUBJECT: 'http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump'
-      DCR_INITIAL_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten'
-      DCR_DELTA_SYNC_JOB_OPERATION: 'http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing'
-      DCR_JOB_CREATOR_URI: 'http://data.lblod.info/services/id/besluiten-consumer'
+      DCR_START_FROM_DELTA_TIMESTAMP: 2024-10-01
+      DCR_SYNC_BASE_URL: https://lokaalbeslist-harvester-3.s.redhost.be/
+      DCR_SYNC_FILES_PATH: /sync/besluiten/files
+      DCR_SYNC_DATASET_SUBJECT: http://data.lblod.info/datasets/delta-producer/dumps/lblod-harvester/BesluitenCacheGraphDump
+      DCR_INITIAL_SYNC_JOB_OPERATION: http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/initialSync/besluiten
+      DCR_DELTA_SYNC_JOB_OPERATION: http://redpencil.data.gift/id/jobs/concept/JobOperation/deltas/consumer/besluitenSyncing
+      DCR_JOB_CREATOR_URI: http://data.lblod.info/services/id/besluiten-consumer
       DCR_DISABLE_INITIAL_SYNC: true
       DCR_WAIT_FOR_INITIAL_SYNC: false
       DCR_DISABLE_DELTA_INGEST: false
@@ -154,24 +154,22 @@ services:
   ##################
   identifier:
     image: semtech/mu-identifier:1.10.1
-    # ports:
-    #   - '80:80'
     labels:
-      - 'logging=true'
+      - logging=true
     restart: always
   dispatcher:
     image: semtech/mu-dispatcher:2.1.0-beta.2
     volumes:
       - ./config/dispatcher:/config
     labels:
-      - 'logging=true'
+      - logging=true
     restart: always
   deltanotifier:
     image: semtech/mu-delta-notifier:0.3.0
     volumes:
       - ./config/delta:/config
     labels:
-      - 'logging=true'
+      - logging=true
     restart: always
     networks:
       - debug
@@ -196,38 +194,15 @@ services:
     networks:
       - debug
       - default
-  resource:
-    image: semtech/mu-cl-resources:1.24.0
-    environment:
-      CACHE_CLEAR_PATH: 'http://cache/.mu/clear-keys'
-    volumes:
-      - ./config/resources:/config
-    restart: always
-    labels:
-      - 'logging=true'
-    logging: *default-logging
-  file:
-    image: semtech/mu-file-service:3.4.0
-    volumes:
-      - ./data/files:/share
-    labels:
-      - 'logging=true'
-    restart: always
-    logging: *default-logging
   virtuoso:
     image: redpencil/virtuoso:1.2.0-rc.1
     environment:
       SPARQL_UPDATE: true
-      DEFAULT_GRAPH: 'http://mu.semte.ch/application'
+      DEFAULT_GRAPH: http://mu.semte.ch/application
     volumes:
       - ./data/db:/data
       - ./config/virtuoso/virtuoso.ini:/data/virtuoso.ini # Note: on production override this setting
       - ./config/virtuoso/:/opt/virtuoso-scripts
     labels:
-      - 'logging=true'
-    restart: always
-  modified:
-    image: lblod/track-modified-service:0.0.0
-    labels:
-      - 'logging=true'
+      - logging=true
     restart: always
