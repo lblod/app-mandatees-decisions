@@ -1,3 +1,4 @@
+import { querySudo } from "@lblod/mu-auth-sudo";
 import { Changeset } from "../types";
 import { log } from "./logger";
 import { InterestingSubject, publish } from "./publisher";
@@ -61,3 +62,35 @@ export const publishInterestingSubjects = async (
     await publish(current, additionalTriples);
   }
 };
+
+export const removeNonInterestingSubjects = async (
+  changesets: Changeset[],
+  interestingSubjectsFilter: SubjectFilter,
+) => {
+  const allSubjects = mapToSubjects(changesets);
+  const subjectsToExclude = await filterInterestingSubjects(
+    allSubjects,
+    interestingSubjectsFilter
+  );
+  const escapedToExclude = subjectsToExclude
+    .map((interestingSubject) => `<${interestingSubject.uri}>`)
+    .join(", ")
+  log(
+    `Removing all non interesting subjects from graph: http://mu.semte.ch/graphs/public`,
+    "debug"
+  );
+
+  await querySudo(`
+    DELETE {
+      GRAPH <http://mu.semte.ch/graphs/public> {
+        ?s ?p ?o
+      }
+    }
+    WHERE {
+      GRAPH <http://mu.semte.ch/graphs/public> {
+        ?s ?p ?o
+      }
+      FILTER (?s NOT IN ( ${escapedToExclude} ) )
+    }
+  `)
+}

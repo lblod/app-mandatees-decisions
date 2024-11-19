@@ -1,11 +1,12 @@
 import { Changeset } from "../types";
 import { querySudo } from "@lblod/mu-auth-sudo";
 
-import { publishInterestingSubjects } from "./handle-types-util";
+import { publishInterestingSubjects, removeNonInterestingSubjects } from "./handle-types-util";
 import { InterestingSubject } from "./publisher";
 
 export default async function dispatch(changesets: Changeset[]) {
   await publishInterestingSubjects(changesets, interestingSubjects);
+  await removeNonInterestingSubjects(changesets, interestingSubjects)
 }
 
 const interestingSubjects = async (
@@ -38,4 +39,3 @@ const interestingSubjects = async (
     })
     .filter((b) => !!b);
 };
-
