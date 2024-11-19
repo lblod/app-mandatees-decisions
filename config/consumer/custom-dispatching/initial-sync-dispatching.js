@@ -1,4 +1,4 @@
-const { parallelisedBatchedUpdate } = require("./utils");
+const { parallelizedBatchedUpdate } = require("./utils");
 const {
   BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES,
   DIRECT_DATABASE_ENDPOINT,
@@ -15,7 +15,7 @@ const endpoint = BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES
 
 /**
  * Dispatch the fetched information to a target graph.
- * @param { mu, muAuthSudo, fech } lib - The provided libraries from the host service.
+ * @param { mu, muAuthSudo, fetch } lib - The provided libraries from the host service.
  * @param { termObjects } data - The fetched quad information, which objects of serialized Terms
  *          [ {
  *              graph: "<http://foo>",
@@ -38,7 +38,7 @@ async function dispatch(lib, data) {
   }
   console.log(`Using ${endpoint} to insert triples`);
 
-  await parallelisedBatchedUpdate (
+  await parallelizedBatchedUpdate (
     lib,
     triples,
     INGEST_GRAPH,
@@ -57,7 +57,7 @@ async function dispatch(lib, data) {
 /**
  * A callback you can override to do extra manipulations
  *   after initial ingest.
- * @param { mu, muAuthSudo, fech } lib - The provided libraries from the host service.
+ * @param { mu, muAuthSudo, fetch } lib - The provided libraries from the host service.
  * @return {void} Nothing
  */
 async function onFinishInitialIngest(_lib) {
