@@ -132,7 +132,7 @@ services:
       MAX_PAGE_SIZE_BYTES: 10000000
       INITIAL_STATE_LIMIT: 10000
       DIRECT_DB_ENDPOINT: http://virtuoso:8890/sparql
-      WRITE_INITIAL_STATE: true
+      WRITE_INITIAL_STATE: false # false as we do not do an initial sync of the consumers
     volumes:
       - ./config/ldes-delta-pusher/:/config/
       - ./data/ldes-feed/:/data/
