@@ -1,5 +1,3 @@
-version: "3.7"
-
 x-logging: &default-logging
   driver: json-file
   options:
@@ -110,22 +108,22 @@ services:
     restart: always
     logging: *default-logging
     labels:
-      - "logging=true"
+      - logging=true
     environment:
-      BASE_URL: "http://localhost/streams/ldes/" # TODO: updated to actually url
+      BASE_URL: http://localhost/streams/ldes/ # TODO: updated to actually url
       FOLDER_DEPTH: 1
       PAGE_RESOURCES_COUNT: 20
-      TIME_TREE_RELATION_PATH: "http://www.w3.org/ns/prov#generatedAtTime"
+      TIME_TREE_RELATION_PATH: http://www.w3.org/ns/prov#generatedAtTime
       CACHE_SIZE: 10
-      DATA_FOLDER: "/data"
-      ENABLE_AUTH: "false"
+      DATA_FOLDER: /data
+      ENABLE_AUTH: false
     volumes:
-      - "./data/ldes-feed/:/data/"
+      - ./data/ldes-feed/:/data/
   ldes-delta-pusher:
     image: redpencil/ldes-delta-pusher:0.6.2
     environment:
-      LDES_ENDPOINT: http://ldes-backend
-      LDES_BASE: http://localhost/streams/ldes/public # TODO: updated to actually url
+      LDES_ENDPOINT: https://mandaten-besluiten.lblod.info
+      LDES_BASE: https://mandaten-besluiten.lblod.info/streams/ldes/public
       CRON_HEALING: 0 0 0 * * * # Every day at midnight
       AUTO_HEALING: false
       SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: 429,500,502,503,504
@@ -138,7 +136,7 @@ services:
       - ./data/ldes-feed/:/data/
     restart: always
     labels:
-      - "logging=true"
+      - logging=true
     links:
       - virtuoso:database
   ##################
@@ -166,25 +164,25 @@ services:
   database:
     image: semtech/sparql-parser:0.0.8
     environment:
-      MU_SPARQL_ENDPOINT: "http://virtuoso:8890/sparql"
-      DATABASE_OVERLOAD_RECOVERY: "true"
-      DATABASE_COMPATIBILITY: "Virtuoso"
+      MU_SPARQL_ENDPOINT: http://virtuoso:8890/sparql
+      DATABASE_OVERLOAD_RECOVERY: true
+      DATABASE_COMPATIBILITY: Virtuoso
       # Note: not sure wether it gets picked up properly, it is meant for healing-process which may make
       # heavy queries
       QUERY_MAX_PROCESSING_TIME: 605000
       QUERY_MAX_EXECUTION_TIME: 605000
-      LOG_SERVER_CONFIGURATION: "true"
-      LOG_DELTA_MESSAGES: "false"
-      LOG_OUTGOING_SPARQL_QUERIES: "true"
-      LOG_INCOMING_SPARQL_QUERIES: "true"
-      LOG_TEMPLATE_MATCHER_PERFORMANCE: "false"
-      LOG_ACCESS_RIGHTS: "false"
-      INSPECT_ACCESS_RIGHTS_PROCESSING: "false"
+      LOG_SERVER_CONFIGURATION: true
+      LOG_DELTA_MESSAGES: false
+      LOG_OUTGOING_SPARQL_QUERIES: true
+      LOG_INCOMING_SPARQL_QUERIES: true
+      LOG_TEMPLATE_MATCHER_PERFORMANCE: false
+      LOG_ACCESS_RIGHTS: false
+      INSPECT_ACCESS_RIGHTS_PROCESSING: false
     volumes:
       - ./config/cl-authorization:/config
       - ./data/mu-auth:/data
     labels:
-      - "logging=true"
+      - logging=true
     restart: always
     logging: *default-logging
   virtuoso:
@@ -202,11 +200,11 @@ services:
   migrations:
     image: semtech/mu-migrations-service:0.6.0
     environment:
-      MU_SPARQL_TIMEOUT: "300"
+      MU_SPARQL_TIMEOUT: 300
       MU_SPARQL_ENDPOINT: http://virtuoso:8890/sparql
     volumes:
       - ./config/migrations:/data/migrations
     labels:
-      - "logging=true"
+      - logging=true
     restart: always
     logging: *default-logging

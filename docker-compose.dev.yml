@@ -6,26 +6,26 @@ services:
     restart: no
     environment:
       DCR_SYNC_BASE_URL: https://dev.harvesting-self-service.lblod.info/
-      DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
+      DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
       NODE_ENV: development
   consumer-1:
     restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
+      DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
       NODE_ENV: development
     profiles:
       - consumer
   consumer-2:
     restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
+      DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
       NODE_ENV: development
     profiles:
       - consumer
   consumer-3:
     restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
+      DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
       NODE_ENV: development
     profiles:
       - consumer
@@ -35,10 +35,13 @@ services:
   ldes-backend:
     environment:
       NODE_ENV: development
+      BASE_URL: http://localhost/streams/ldes/
   ldes-delta-pusher:
     restart: no
     environment:
       NODE_ENV: development
+      LDES_ENDPOINT: http://ldes-backend
+      LDES_BASE: http://localhost/streams/ldes/public
   ##################
   # Base services ##
   ##################
