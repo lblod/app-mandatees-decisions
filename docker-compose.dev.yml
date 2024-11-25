@@ -8,8 +8,6 @@ services:
       DCR_SYNC_BASE_URL: https://dev.harvesting-self-service.lblod.info/
       DCR_CRON_PATTERN_DELTA_SYNC: 0/15 * * * * *
       NODE_ENV: development
-    ports:
-      - 9224:9229
   consumer-1:
     restart: no
     environment:
@@ -41,8 +39,6 @@ services:
     restart: no
     environment:
       NODE_ENV: development
-    ports:
-      - 9227:9229
   ##################
   # Base services ##
   ##################
