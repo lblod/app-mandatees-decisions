@@ -3,7 +3,7 @@ import { CronJob } from 'cron';
 
 import { log } from "./logger";
 
-const CLEANUP_CRON = process.CRON_PATTERN_CLEANUP || '0 */2 * * *'; // Fallback is every 2 hours
+const CLEANUP_CRON = process.env.CRON_PATTERN_CLEANUP || '0 */2 * * *'; // Fallback is every 2 hours
 
 export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
   console.log(`[***************************************************]`);
@@ -33,7 +33,7 @@ export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
         ?s a ?type.
         ?s ?p ?o.
       }
-      FILTER (?s NOT IN ( ${escapedInterestingTypes} ) )
+      FILTER (?type NOT IN ( ${escapedInterestingTypes} ) )
     }
   `)
 });
