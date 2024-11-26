@@ -10,13 +10,6 @@ export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
   console.log(` Cleaning up the public graph`);
   console.log(`[***************************************************]`);
 
-  const interestingTypes = [
-    "http://data.vlaanderen.be/ns/besluit#Artikel",
-    "http://data.vlaanderen.be/ns/besluit#Besluit"
-  ];
-  const escapedInterestingTypes = interestingTypes.map((type) => `<${type}>`)
-    .join(", ")
-
   log(
     `Removing all non interesting subjects from graph: http://mu.semte.ch/graphs/public`,
     "debug"
@@ -32,8 +25,20 @@ export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
       GRAPH <http://mu.semte.ch/graphs/public> {
         ?s a ?type.
         ?s ?p ?o.
+
+        OPTIONAL {
+          ?s a ?otherType.
+        }
       }
-      FILTER (?type NOT IN ( ${escapedInterestingTypes} ) )
+      FILTER (
+        ?type != <http://data.vlaanderen.be/ns/besluit#Artikel> ||
+        ?type != <http://data.vlaanderen.be/ns/besluit#Besluit>
+      )
+      BIND(IF(BOUND(?otherType), ?otherType, <http://other>) AS ?safeOtherType)    
+      FILTER (
+        ?safeOtherType != <http://data.vlaanderen.be/ns/besluit#Artikel> ||
+        ?safeOtherType != <http://data.vlaanderen.be/ns/besluit#Besluit>
+      )
     }
   `)
 });
