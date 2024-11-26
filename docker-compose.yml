@@ -110,8 +110,7 @@ services:
     labels:
       - logging=true
     environment:
-      BASE_URL: http://localhost/streams/ldes/ # TODO: updated to actually url
-      FOLDER_DEPTH: 1
+      BASE_URL: https://mandaten-besluiten.lblod.info/streams/ldes/
       PAGE_RESOURCES_COUNT: 20
       TIME_TREE_RELATION_PATH: http://www.w3.org/ns/prov#generatedAtTime
       CACHE_SIZE: 10
@@ -126,6 +125,7 @@ services:
       LDES_BASE: https://mandaten-besluiten.lblod.info/streams/ldes/public
       CRON_HEALING: 0 0 0 * * * # Every day at midnight
       AUTO_HEALING: false
+      CRON_PATTERN_CLEANUP: '0 */2 * * *' # Every 2 hours
       SUDO_QUERY_RETRY_FOR_HTTP_STATUS_CODES: 429,500,502,503,504
       MAX_PAGE_SIZE_BYTES: 10000000
       INITIAL_STATE_LIMIT: 10000
