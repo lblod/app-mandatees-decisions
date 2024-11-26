@@ -5,7 +5,7 @@ import { log } from "./logger";
 
 const CLEANUP_CRON = process.CRON_PATTERN_CLEANUP || '0 */2 * * *'; // Fallback is every 2 hours
 
-new CronJob(CLEANUP_CRON, async () => {
+export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
   console.log(`[***************************************************]`);
   console.log(` Cleaning up the public graph`);
   console.log(`[***************************************************]`);
@@ -36,4 +36,4 @@ new CronJob(CLEANUP_CRON, async () => {
       FILTER (?s NOT IN ( ${escapedInterestingTypes} ) )
     }
   `)
-}).start();
+});

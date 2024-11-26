@@ -3,10 +3,13 @@ import { querySudo } from "@lblod/mu-auth-sudo";
 
 import { publishInterestingSubjects } from "./handle-types-util";
 import { InterestingSubject } from "./publisher";
+import { cleanupCron } from './cleanup';
 
 export default async function dispatch(changesets: Changeset[]) {
   await publishInterestingSubjects(changesets, interestingSubjects);
 }
+
+cleanupCron.start();
 
 const interestingSubjects = async (
   subjects: string[]
