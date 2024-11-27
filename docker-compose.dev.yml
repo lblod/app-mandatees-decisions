@@ -60,3 +60,7 @@ services:
     restart: no
     ports:
       - 8891:8890
+  modified:
+    restart: no
+    environment:
+      NODE_ENV: development

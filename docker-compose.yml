@@ -207,4 +207,12 @@ services:
     labels:
       - logging=true
     restart: always
+    logging: *default-logging  
+  modified:
+    image: lblod/track-modified-service:0.0.1
+    labels:
+      - "logging=true"
+    volumes:
+      - ./config/modified:/config
+    restart: always
     logging: *default-logging
