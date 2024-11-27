@@ -1,4 +1,5 @@
 import { querySudo } from "@lblod/mu-auth-sudo";
+import { sparqlEscapeDateTime } from 'mu'
 import { CronJob } from 'cron';
 
 import { log } from "./logger";
@@ -10,12 +11,18 @@ export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
   console.log(` Cleaning up the public graph`);
   console.log(`[***************************************************]`);
 
+  const twoDaysAgo = new Date()
+  twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+  const escapedTwoDaysBefore = sparqlEscapeDateTime(twoDaysAgo);
+  
   log(
-    `Removing all non interesting subjects from graph: http://mu.semte.ch/graphs/public`,
+    `removing all triples from graph: http://mu.semte.ch/graphs/public that where last modified on ${twoDaysAgo}`,
     "debug"
   );
 
   await querySudo(`
+    PREFIX dcterms: <http://purl.org/dc/terms/>
+
     DELETE {
       GRAPH <http://mu.semte.ch/graphs/public> {
         ?s ?p ?o.
@@ -23,22 +30,11 @@ export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
     }
     WHERE {
       GRAPH <http://mu.semte.ch/graphs/public> {
-        ?s a ?type.
         ?s ?p ?o.
+        ?s dcterms:modified ?modifiedDate.
 
-        OPTIONAL {
-          ?s a ?otherType.
-        }
+        FILTER ( ?modifiedDate <= ${escapedTwoDaysBefore})
       }
-      FILTER (
-        ?type != <http://data.vlaanderen.be/ns/besluit#Artikel> ||
-        ?type != <http://data.vlaanderen.be/ns/besluit#Besluit>
-      )
-      BIND(IF(BOUND(?otherType), ?otherType, <http://other>) AS ?safeOtherType)    
-      FILTER (
-        ?safeOtherType != <http://data.vlaanderen.be/ns/besluit#Artikel> ||
-        ?safeOtherType != <http://data.vlaanderen.be/ns/besluit#Besluit>
-      )
     }
   `)
 });
