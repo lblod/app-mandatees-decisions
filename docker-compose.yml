@@ -121,8 +121,8 @@ services:
   ldes-delta-pusher:
     image: redpencil/ldes-delta-pusher:0.6.2
     environment:
-      LDES_ENDPOINT: https://mandaten-besluiten.lblod.info
-      LDES_BASE: https://mandaten-besluiten.lblod.info/streams/ldes/public
+      LDES_ENDPOINT: http://ldes-backend
+      LDES_BASE: https://mandaten-besluiten.lblod.info/streams/ldes
       CRON_HEALING: 0 0 0 * * * # Every day at midnight
       AUTO_HEALING: false
       CRON_PATTERN_CLEANUP: '0 */2 * * *' # Every 2 hours
