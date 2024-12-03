@@ -11,10 +11,7 @@ export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
   console.log(` Cleaning up the public graph`);
   console.log(`[***************************************************]`);
 
-  const twoDaysAgo = new Date()
-  twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-  const escapedTwoDaysBefore = sparqlEscapeDateTime(twoDaysAgo);
-  
+  const twoDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2);
   log(
     `removing all triples from graph: http://mu.semte.ch/graphs/public that where last modified on ${twoDaysAgo}`,
     "debug"
@@ -33,7 +30,7 @@ export const cleanupCron = new CronJob(CLEANUP_CRON, async () => {
         ?s ?p ?o.
         ?s dcterms:modified ?modifiedDate.
 
-        FILTER ( ?modifiedDate <= ${escapedTwoDaysBefore})
+        FILTER ( ?modifiedDate <= ${sparqlEscapeDateTime(twoDaysAgo)})
       }
     }
   `)
