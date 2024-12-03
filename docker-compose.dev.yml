@@ -40,8 +40,7 @@ services:
     restart: no
     environment:
       NODE_ENV: development
-      LDES_ENDPOINT: http://ldes-backend
-      LDES_BASE: http://localhost/streams/ldes/public
+      LDES_BASE: http://localhost/streams/ldes
       CRON_PATTERN_CLEANUP: '*/2 * * * *' # Every 2 minutes
   ##################
   # Base services ##

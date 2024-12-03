@@ -119,10 +119,12 @@ services:
     volumes:
       - ./data/ldes-feed/:/data/
   ldes-delta-pusher:
-    image: redpencil/ldes-delta-pusher:0.6.2
+    image: redpencil/ldes-delta-pusher:1.0.0
     environment:
       LDES_ENDPOINT: http://ldes-backend
       LDES_BASE: https://mandaten-besluiten.lblod.info/streams/ldes
+      LDES_FOLDER: public # ignored as we have an ldes config that sets the stream folder
+      DATA_FOLDER: /data
       CRON_HEALING: 0 0 0 * * * # Every day at midnight
       AUTO_HEALING: false
       CRON_PATTERN_CLEANUP: '0 */2 * * *' # Every 2 hours

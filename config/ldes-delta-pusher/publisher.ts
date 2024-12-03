@@ -1,12 +1,15 @@
 import { sparqlEscapeUri, sparqlEscape } from "mu";
 import { querySudo } from "@lblod/mu-auth-sudo";
-import { LDES_ENDPOINT } from "../config";
-import fetch from "node-fetch";
+import { addData, getConfigFromEnv } from "@lblod/ldes-producer";
+
+import { LDES_FRAGMENTER } from "../config";
 import { log } from "./logger";
 import {
   defaultProperties,
   officialPredicates,
 } from "./ldes-instances";
+
+const ldesProducerConfig = getConfigFromEnv();
 
 export type LDES_TYPE = "public";
 export type TypesWithFilter = {
@@ -46,7 +49,7 @@ const fetchSubjectData = async (
       ${sparqlEscapeUri(subject.uri)} ?p ?o .
     } WHERE {
       GRAPH ?g {
-        ${sparqlEscapeUri(subject.uri)}> ?p ?o .
+        ${sparqlEscapeUri(subject.uri)} ?p ?o .
       }
       ${predicateLimiter}
       ${filter}
@@ -54,28 +57,6 @@ const fetchSubjectData = async (
   `);
   return data.results.bindings.map(bindingToTriple).join("\n");
 };
-
-async function sendLDESRequest(type: string, body: string, retriesLeft = 3) {
-  log(`Sending data to LDES endpoint ${LDES_ENDPOINT}${type}`, "debug");
-  await fetch(`${LDES_ENDPOINT}${type}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "text/turtle",
-    },
-    // xsd prefix is used in the types of the result data, so it needs to be declared.
-    body: `@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n${body}`,
-  }).catch(async (e) => {
-    if (retriesLeft > 0) {
-      log(
-        `Error sending data to LDES endpoint ${type} (retrying): ${e}`,
-        "error"
-      );
-      sendLDESRequest(type, body, retriesLeft - 1);
-    } else {
-      log(`Error sending data to LDES endpoint ${type}: ${e}`, "error");
-    }
-  });
-}
 
 const datatypeNames = {
   "http://www.w3.org/2001/XMLSchema#dateTime": "dateTime",
@@ -118,11 +99,13 @@ export const publish = async (
         `[${target}] Publishing data for subject ${subject.uri}:\n${data}`,
         "debug"
       );
-      return sendLDESRequest(target, data).catch((e) => {
-        log(
-          `Error publishing data for subject ${subject.uri} to LDES endpoint ${subject.ldesType}: ${e}`,
-          "error"
-        );
+      const safeData = `@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n${data}`;
+
+      await addData(ldesProducerConfig, {
+        contentType: "text/turtle",
+        folder: target,
+        body: safeData,
+        fragmenter: LDES_FRAGMENTER,
       });
     })
   );
