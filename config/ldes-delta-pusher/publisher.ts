@@ -43,10 +43,10 @@ const fetchSubjectData = async (
   const data = await querySudo(`
     PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
     CONSTRUCT {
-      <${subject.uri}> ?p ?o .
+      ${sparqlEscapeUri(subject.uri)} ?p ?o .
     } WHERE {
       GRAPH ?g {
-        <${subject.uri}> ?p ?o .
+        ${sparqlEscapeUri(subject.uri)}> ?p ?o .
       }
       ${predicateLimiter}
       ${filter}
