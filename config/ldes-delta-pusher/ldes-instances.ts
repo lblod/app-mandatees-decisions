@@ -1,8 +1,16 @@
 export const ldesInstances = {
   public: {
     entities: {
-      "http://data.vlaanderen.be/ns/besluit#Artikel": {},
-      "http://data.vlaanderen.be/ns/besluit#Besluit": {},
+      "http://data.vlaanderen.be/ns/besluit#Artikel": {
+        healingPredicates: [
+          "http://purl.org/dc/terms/modified",
+        ],
+      },
+      "http://data.vlaanderen.be/ns/besluit#Besluit": {
+        healingPredicates: [
+          "http://purl.org/dc/terms/modified",
+        ],
+      },
     },
   }
 };
