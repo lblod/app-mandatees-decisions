@@ -5,11 +5,17 @@ export const ldesInstances = {
         healingPredicates: [
           "http://purl.org/dc/terms/modified",
         ],
+        instanceFilter: `
+        FILTER ( ?p = <http://data.vlaanderen.be/ns/mandaat#bekrachtigtAanstellingVan> || ?p = <http://data.vlaanderen.be/ns/mandaat#bekrachtigtOntslagVan> )
+        `
       },
       "http://data.vlaanderen.be/ns/besluit#Besluit": {
         healingPredicates: [
           "http://purl.org/dc/terms/modified",
         ],
+        instanceFilter: `
+        FILTER ( ?p = <http://data.vlaanderen.be/ns/mandaat#bekrachtigtAanstellingVan> || ?p = <http://data.vlaanderen.be/ns/mandaat#bekrachtigtOntslagVan> )
+        `
       },
     },
   }
