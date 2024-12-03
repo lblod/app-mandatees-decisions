@@ -14,21 +14,21 @@ services:
       DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
       NODE_ENV: development
     profiles:
-      - consumer
+      - all-consumers # When running all consumers it uses the test endpoint here
   consumer-2:
     restart: no
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
       NODE_ENV: development
     profiles:
-      - consumer
+      - all-consumers # When running all consumers it uses the test endpoint here
   consumer-3:
     restart: no
     environment:
       DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
       NODE_ENV: development
     profiles:
-      - consumer
+      - all-consumers # When running all consumers it uses the test endpoint here
   ######################
   # LDES              ##
   ######################
