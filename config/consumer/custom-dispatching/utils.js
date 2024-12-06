@@ -1,4 +1,4 @@
-async function parallelisedBatchedUpdate (
+async function parallelizedBatchedUpdate (
   lib,
   nTriples,
   targetGraph,
@@ -117,7 +117,7 @@ async function batchedUpdate(
         throw new Error(`Backoff mechanism stops in batched update,
           we can't work with chunks the size of ${smallerBatch}`);
       }
-      console.log(`Let's try to ingest wiht chunk size of ${smallerBatch}`);
+      console.log(`Let's try to ingest with chunk size of ${smallerBatch}`);
       await batchedUpdate(
         lib,
         chunkedTriple,
@@ -135,5 +135,5 @@ async function batchedUpdate(
 
 module.exports = {
   batchedUpdate,
-  parallelisedBatchedUpdate,
+  parallelizedBatchedUpdate,
 };

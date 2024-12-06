@@ -5,7 +5,7 @@ const { BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES,
   INGEST_GRAPH,
   PARALLEL_CALLS
 } = require('./config');
-const { parallelisedBatchedUpdate } = require('./utils');
+const { parallelizedBatchedUpdate } = require('./utils');
 const endpoint = BYPASS_MU_AUTH_FOR_EXPENSIVE_QUERIES ? DIRECT_DATABASE_ENDPOINT : process.env.MU_SPARQL_ENDPOINT; //Defaults to mu-auth
 
 
@@ -34,7 +34,7 @@ async function dispatch(lib, data) {
     console.log(`Using ${endpoint} to insert triples`);
 
     const deleteStatements = deletes.map(o => `${o.subject} ${o.predicate} ${o.object}.`);
-    await parallelisedBatchedUpdate(
+    await parallelizedBatchedUpdate(
       lib,
       deleteStatements,
       INGEST_GRAPH,
@@ -50,7 +50,7 @@ async function dispatch(lib, data) {
     );
 
     const insertStatements = inserts.map(o => `${o.subject} ${o.predicate} ${o.object}.`);
-    await parallelisedBatchedUpdate(
+    await parallelizedBatchedUpdate(
       lib,
       insertStatements,
       INGEST_GRAPH,

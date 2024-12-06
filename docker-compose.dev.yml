@@ -1,74 +1,65 @@
 services:
+  ######################
+  # Consumer services ##
+  ######################
   consumer-0:
-    restart: 'no'
+    restart: no
     environment:
-      DCR_SYNC_BASE_URL: 'https://dev.harvesting-self-service.lblod.info/'
-      DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+      DCR_SYNC_BASE_URL: https://dev.harvesting-self-service.lblod.info/
+      DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
+      NODE_ENV: development
   consumer-1:
-    restart: 'no'
-    profiles:
-      - qaConsumer-1
+    restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+      DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
+      NODE_ENV: development
+    profiles:
+      - all-consumers # When running all consumers it uses the test endpoint here
   consumer-2:
-    restart: 'no'
-    profiles:
-      - qaConsumer-2
+    restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
+      DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
+      NODE_ENV: development
+    profiles:
+      - all-consumers # When running all consumers it uses the test endpoint here
   consumer-3:
-    restart: 'no'
-    profiles:
-      - qaConsumer-3
+    restart: no
     environment:
-      DCR_CRON_PATTERN_DELTA_SYNC: '0/15 * * * * *'
-      DCR_START_FROM_DELTA_TIMESTAMP: '2024-01-12T15:51:23.478Z'
-  jobs-dashboard:
-    restart: 'no'
-    ports:
-      - 82:80
-  publication-triplestore:
-    ports:
-      - '8892:8890'
-    restart: 'no'
-  jobs-controller:
-    restart: 'no'
-  delta-producer-background-jobs-initiator:
-    restart: 'no'
+      DCR_CRON_PATTERN_DELTA_SYNC: 0 */5 * * * * # Every 5 minutes
+      NODE_ENV: development
+    profiles:
+      - all-consumers # When running all consumers it uses the test endpoint here
+  ######################
+  # LDES              ##
+  ######################
+  ldes-backend:
     environment:
       NODE_ENV: development
-  delta-producer-publication-graph-maintainer:
-    restart: 'no'
-  delta-producer-dump-file-publisher:
-    restart: 'no'
+      BASE_URL: http://localhost/streams/ldes/
+  ldes-delta-pusher:
+    restart: no
+    environment:
+      NODE_ENV: development
+      LDES_BASE: http://localhost/streams/ldes
+      CRON_PATTERN_CLEANUP: '*/2 * * * *' # Every 2 minutes
+  ##################
+  # Base services ##
+  ##################
   identifier:
-    restart: 'no'
+    restart: no
     ports:
-      - '81:80'
-    networks:
-      deltas-sync:
-        aliases:
-          - producer-identifier
-      default:
-        aliases:
-          - identifier
+      - 81:80
   dispatcher:
-    restart: 'no'
+    restart: no
   deltanotifier:
-    restart: 'no'
+    restart: no
   database:
-    restart: 'no'
+    restart: no
   virtuoso:
-    restart: 'no'
+    restart: no
     ports:
-      - '8891:8890'
+      - 8891:8890
   modified:
-    restart: 'no'
-
-networks:
-  deltas-sync:
-    driver: bridge
-    name: deltas-sync
+    restart: no
+    environment:
+      NODE_ENV: development
