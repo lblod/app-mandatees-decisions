@@ -31,6 +31,9 @@ services:
       DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
+    logging: *default-logging
+    labels:
+      - logging=true
   consumer-1:
     image: lblod/delta-consumer:0.0.26
     depends_on:
@@ -54,6 +57,9 @@ services:
       DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
+    logging: *default-logging
+    labels:
+      - logging=true
   consumer-2:
     image: lblod/delta-consumer:0.0.26
     depends_on:
@@ -77,6 +83,9 @@ services:
       DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
+    logging: *default-logging
+    labels:
+      - logging=true
   consumer-3:
     image: lblod/delta-consumer:0.0.26
     depends_on:
@@ -100,15 +109,15 @@ services:
       DCR_DISABLE_DELTA_INGEST: false
       INGEST_GRAPH: http://mu.semte.ch/graphs/public
       BATCH_SIZE: 500
+    logging: *default-logging
+    labels:
+      - logging=true
   ######################
   # LDES              ##
   ######################
   ldes-backend:
     image: redpencil/fragmentation-producer:0.4.1
     restart: always
-    logging: *default-logging
-    labels:
-      - logging=true
     environment:
       BASE_URL: https://mandaten-besluiten.lblod.info/streams/ldes/
       PAGE_RESOURCES_COUNT: 20
@@ -118,6 +127,9 @@ services:
       ENABLE_AUTH: false
     volumes:
       - ./data/ldes-feed/:/data/
+    logging: *default-logging
+    labels:
+      - logging=true
   ldes-delta-pusher:
     image: redpencil/ldes-delta-pusher:1.1.0
     environment:
@@ -137,32 +149,36 @@ services:
       - ./config/ldes-delta-pusher/:/config/
       - ./data/ldes-feed/:/data/
     restart: always
-    labels:
-      - logging=true
     links:
       - virtuoso:database
+    logging: *default-logging
+    labels:
+      - logging=true
   ##################
   # Base services ##
   ##################
   identifier:
     image: semtech/mu-identifier:1.10.1
+    restart: always
+    logging: *default-logging
     labels:
       - logging=true
-    restart: always
   dispatcher:
     image: semtech/mu-dispatcher:2.1.0-beta.2
     volumes:
       - ./config/dispatcher:/config
+    restart: always
+    logging: *default-logging
     labels:
       - logging=true
-    restart: always
   deltanotifier:
     image: semtech/mu-delta-notifier:0.3.0
     volumes:
       - ./config/delta:/config
+    restart: always
+    logging: *default-logging
     labels:
       - logging=true
-    restart: always
   database:
     image: semtech/sparql-parser:0.0.8
     environment:
@@ -183,10 +199,10 @@ services:
     volumes:
       - ./config/cl-authorization:/config
       - ./data/mu-auth:/data
-    labels:
-      - logging=true
     restart: always
     logging: *default-logging
+    labels:
+      - logging=true
   virtuoso:
     image: redpencil/virtuoso:1.2.0-rc.1
     environment:
@@ -196,9 +212,10 @@ services:
       - ./data/db:/data
       - ./config/virtuoso/virtuoso.ini:/data/virtuoso.ini # Note: on production override this setting
       - ./config/virtuoso/:/opt/virtuoso-scripts
+    restart: always
+    logging: *default-logging
     labels:
       - logging=true
-    restart: always
   migrations:
     image: semtech/mu-migrations-service:0.6.0
     environment:
@@ -206,15 +223,15 @@ services:
       MU_SPARQL_ENDPOINT: http://virtuoso:8890/sparql
     volumes:
       - ./config/migrations:/data/migrations
-    labels:
-      - logging=true
     restart: always
-    logging: *default-logging  
+    logging: *default-logging
+    labels:
+      - logging=true  
   modified:
     image: lblod/track-modified-service:0.0.1
-    labels:
-      - "logging=true"
     volumes:
       - ./config/modified:/config
     restart: always
     logging: *default-logging
+    labels:
+      - logging=true
