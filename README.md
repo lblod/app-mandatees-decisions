@@ -28,8 +28,8 @@ Below we will add the most important environment variables so you are up to date
 ### Harvester url's
 
 - Development
-  - https://dev.harvesting-self-service.lblod.info
-  - https://dev.harvesting-self-service.lblod.info/login
+  - https://dev.harvesting-self-service.lblod.info (harvester url)
+  - https://dev.harvesting-self-service.lblod.info/login (login to manage the harvesting jobs, create/monitor)
 - Testing/production
   - https://lokaalbeslist-harvester-0.s.redhost.be/
   - https://lokaalbeslist-harvester-1.s.redhost.be/
