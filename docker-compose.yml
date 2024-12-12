@@ -131,7 +131,7 @@ services:
     labels:
       - logging=true
   ldes-delta-pusher:
-    image: redpencil/ldes-delta-pusher:1.1.3
+    image: redpencil/ldes-delta-pusher:1.2.0
     environment:
       LDES_ENDPOINT: http://ldes-backend
       LDES_BASE: https://mandaten-besluiten.lblod.info/streams/ldes

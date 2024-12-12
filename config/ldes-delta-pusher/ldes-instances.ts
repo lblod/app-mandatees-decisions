@@ -34,11 +34,13 @@ export const officialPredicates = {
     "http://data.vlaanderen.be/ns/mandaat#bekrachtigtOntslagVan",
     "http://data.europa.eu/eli/ontology#date_publication",
     "http://data.europa.eu/eli/ontology#title",
+    "http://www.w3.org/ns/prov#wasDerivedFrom",
   ],
   "http://data.vlaanderen.be/ns/besluit#Besluit": [
     "http://data.vlaanderen.be/ns/mandaat#bekrachtigtAanstellingVan",
     "http://data.vlaanderen.be/ns/mandaat#bekrachtigtOntslagVan",
     "http://data.europa.eu/eli/ontology#date_publication",
     "http://data.europa.eu/eli/ontology#title",
+    "http://www.w3.org/ns/prov#wasDerivedFrom",
   ],
 };
