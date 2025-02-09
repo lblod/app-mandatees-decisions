@@ -180,7 +180,7 @@ services:
     labels:
       - logging=true
   database:
-    image: semtech/sparql-parser:0.0.8
+    image: semtech/sparql-parser:0.0.14
     environment:
       MU_SPARQL_ENDPOINT: http://virtuoso:8890/sparql
       DATABASE_OVERLOAD_RECOVERY: true
